@@ -13,7 +13,7 @@
 [![Tools](https://img.shields.io/badge/tools-32-8250df?style=for-the-badge)](docs/tools.md)
 [![Collections](https://img.shields.io/badge/collections-7·21.2_GiB-d73a4a?style=for-the-badge)](docs/collections.md)
 [![Scripts](https://img.shields.io/badge/scripts-23-bfd4f2?style=for-the-badge)](docs/scripts.md)
-[![Gates](https://img.shields.io/badge/release_gates-11/11-4c1_3b82f6?style=for-the-badge)](tools/gate.py)
+[![Gates](https://img.shields.io/badge/release_gates-12/12-4c1_3b82f6?style=for-the-badge)](tools/gate.py)
 
 [![Windows](https://img.shields.io/badge/platform-Windows_10/11-0078d4?style=for-the-badge&logo=windows&logoColor=white)](docs/installation.md)
 [![License](https://img.shields.io/badge/license-MIT-f4c430?style=for-the-badge)](LICENSE)
@@ -25,17 +25,17 @@
 
 <br/>
 
+[⚡ Quick start](#quick-start) &nbsp;·&nbsp; [📦 What is in the box](#what-is-in-the-box) &nbsp;·&nbsp; [🧭 Why it is built this way](#why-it-is-built-this-way) &nbsp;·&nbsp; [🔬 The instruments](#the-instruments) &nbsp;·&nbsp; [📚 Documentation](#documentation)
+
+</div>
+
+<br/>
+
 ```powershell
 git clone https://github.com/gh0st4ace/ashline
 cd ashline
 .\install.ps1 -DryRun     # print the plan — writes nothing
 ```
-
-<br/>
-
-[⚡ Quick start](#quick-start) &nbsp;·&nbsp; [📦 What is in the box](#what-is-in-the-box) &nbsp;·&nbsp; [🧭 Why it is built this way](#why-it-is-built-this-way) &nbsp;·&nbsp; [🔬 The instruments](#the-instruments) &nbsp;·&nbsp; [📚 Documentation](#documentation)
-
-</div>
 
 ---
 
@@ -71,11 +71,9 @@ non-zero, which makes it the only one usable as a CI gate.
 
 <div align="center">
 
-| | |
-|:---|:---|
-| ⏱️ `-Profile config` | seconds |
-| ⏱️ `-Profile tools` | ~1 hour, no collections |
-| ⏱️ `-Profile full` | hours — 21.2 GiB of collections dominates |
+⏱️ &nbsp;`-Profile config`&nbsp; → seconds
+⏱️ &nbsp;`-Profile tools`&nbsp; → ~1 hour, no collections
+⏱️ &nbsp;`-Profile full`&nbsp; → hours — 21.2 GiB of collections dominates
 
 </div>
 
@@ -88,8 +86,6 @@ non-zero, which makes it the only one usable as a CI gate.
 
 ## 📦 What is in the box
 
-<div align="center">
-
 | Layer | Count | Vendored? |
 |:--|--:|:--:|
 | 🧰 **Tools** | 32 · 2.99 GiB | manifest + installers |
@@ -101,8 +97,6 @@ non-zero, which makes it the only one usable as a CI gate.
 | ⚙️ **Scripts** | 23 | ✅ all |
 | 📖 **Documentation** | 15 guides | ✅ all |
 | 🗄️ **Knowledge bases** | 2 | ✅ all |
-
-</div>
 
 ### 🔬 The environments it reproduces
 
@@ -355,9 +349,9 @@ collections as dependencies; their licenses are reproduced in
 
 Scope → [DISCLAIMER.md](DISCLAIMER.md) · Disclosure → [SECURITY.md](SECURITY.md) · Contributing → [CONTRIBUTING.md](CONTRIBUTING.md)
 
-<div align="center">
+<br/>
 
----
+<div align="center">
 
 **Made for people who would rather measure twice than publish once.**
 
