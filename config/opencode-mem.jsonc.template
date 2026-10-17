@@ -1,0 +1,79 @@
+{
+  // ==========================================================================
+  // opencode-mem - persistent memory configuration
+  //
+  // Two settings below MUST NOT be reverted without re-indexing the store.
+  // Both were changed from default because the default did not work here, and
+  // the store was re-indexed after each change.
+  //
+  //   embeddingUseTaskPrefixes: true
+  //     Nomic embeddings need asymmetric task/query prefixes. With this off,
+  //     only verbatim wording matches and short queries return nothing.
+  //
+  //   similarityThreshold: 0.45
+  //     Default 0.6 was too strict for short queries like "Ghidra".
+  //
+  // Measured search behaviour on this host: short keyword queries match well.
+  // Long paraphrases with different wording do NOT. Precision verified at
+  // 100% - four correct hits, zero false positives against four distractors.
+  // Keep it that way; a memory store that injects wrong context is worse than
+  // none at all.
+  //
+  // !! AUTO-CAPTURE IS DISABLED AND DOES NOT WORK HERE. !!
+  // Auto-capture requires the provider to return structured output.
+  // opencode/space-bunny-free does not provide it, so capture runs in the
+  // background and does nothing, silently.
+  //
+  // Measured, not assumed: after eight hours of session with many idle
+  // periods, the store still held exactly one memory - the one added by hand.
+  //
+  // CONSEQUENCE: nothing is remembered unless a human writes it. Use the
+  // memory tool with mode "add" before a session ends. add/search/list all
+  // work; only auto-capture is dead.
+  // ==========================================================================
+
+  "storage": {
+    "path": "${COLLECTIONS_DIR}/opencode-mem/data",
+    "webUi": {
+      "enabled": true,
+      "port": 4747,
+      "host": "127.0.0.1"
+    }
+  },
+
+  "embedding": {
+    "provider": "nomic",
+    "model": "nomic-embed-text",
+    // Nomic needs asymmetric prefixes. Without this, only verbatim wording
+    // matches. Do not turn off without re-indexing.
+    "useTaskPrefixes": true,
+    "dimensions": 768
+  },
+
+  "retrieval": {
+    // Default 0.6 was too strict for short keyword queries.
+    "similarityThreshold": 0.45,
+    "maxResults": 10,
+    "injectAtSessionStart": true,
+    "maxInjectedMemories": 3
+  },
+
+  "capture": {
+    // See above: auto-capture is non-functional with this provider. Left
+    // explicitly disabled so nobody waits on a feature that cannot fire.
+    "auto": false,
+    "onIdle": false,
+    // Manual capture only. Write memories deliberately before a session ends -
+    // a summary in the conversation is lost when the session ends, a memory is
+    // injected back at the start of the next one.
+    "requireExplicitWrite": true
+  },
+
+  "privacy": {
+    // Never persist credentials. Scrub before storing anything.
+    "redactSecrets": true,
+    "redactPII": true,
+    "localOnly": true,
+    "telemetry": false
+  }
+}

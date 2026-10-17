@@ -1,0 +1,109 @@
+# ── Secrets ────────────────────────────────────────────────────────────────
+*.pem
+*.key
+*.p12
+*.pfx
+service.json
+.env
+.env.*
+!.env.example
+secrets.json
+credentials.json
+mcp-servers.local.json
+
+# ── Absolute user paths ────────────────────────────────────────────────────
+# Config templates use ${VAR} placeholders. A committed absolute path leaks the
+# author's username and breaks on every other machine.
+# If you find one in your own edit, replace it with a parameter or env var.
+
+# ── Backup and state ───────────────────────────────────────────────────────
+*.bak
+*.bak-*
+backups/
+*-yyyymmdd-*
+ecc-install-state.json
+.cache/
+.staging-*/
+
+# ── Logs ───────────────────────────────────────────────────────────────────
+logs/
+*.log
+opencode.log
+
+# ── Memory store ───────────────────────────────────────────────────────────
+# A vector store contains distilled project context. Never share it by
+# accident - it is not a dependency and not a backup.
+data/
+*.db
+*.sqlite
+*.sqlite3
+drafts.sqlite
+opencode.db
+
+# ── Reference collections (21.2 GiB) ───────────────────────────────────────
+# Cloned at install time and pinned in collections.lock.json. Vendoring them
+# would republish other people's work, break on every upstream commit, and
+# exceed GitHub's 100 MB per-file limit outright.
+/awesome-game-security/
+/awesome-game-security-archive/
+/hack-skills/
+/cybersecurity-skills/
+/game-hacking-references/
+/hacking-online-games/
+/rea/
+/ecc/
+/driver-samples/
+
+# ── Toolchain output ───────────────────────────────────────────────────────
+node_modules/
+dist/
+build/
+*.obj
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.sys
+*.pyc
+__pycache__/
+*.egg-info/
+.venv/
+venv/
+
+# ── Kernel / driver artefacts ──────────────────────────────────────────────
+# Never commit a driver binary or a compiled test target.
+*.sys
+*.cat
+*.inf
+!examples/**/*.inf
+
+# ── OS noise ───────────────────────────────────────────────────────────────
+Thumbs.db
+desktop.ini
+.DS_Store
+*.lnk
+
+# ── Editors ────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Scratch ────────────────────────────────────────────────────────────────
+tmp/
+temp/
+scratch/
+*.tmp
+*.orig
+*.rej
+
+# ── Fetched data caches ────────────────────────────────────────────────────
+# Authored knowledge is committed. Fetched caches are not - they are
+# dependencies pinned in collections.lock.json and refreshed by a documented
+# command. Note that knowledge/game-lab/.../registry.json IS committed: it is
+# the registry's source of truth, not a cache.
+knowledge/kernel-sec/knowledge/lol_drivers.json
+
+# Refresh it with the command recorded in knowledge/kernel-sec/knowledge/README.md:
+#   curl.exe -sS -L -o knowledge\lol_drivers.json https://www.loldrivers.io/api/drivers.json

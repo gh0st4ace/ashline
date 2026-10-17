@@ -1,0 +1,77 @@
+{
+  "name": "opencode-workbench",
+  "version": "0.1.0",
+  "description": "One hardened OpenCode setup for security research, reverse engineering, and game internals - with the evidence discipline and health checks written down.",
+  "keywords": [
+    "opencode",
+    "security-research",
+    "reverse-engineering",
+    "game-security",
+    "mcp",
+    "agent-configuration",
+    "windows"
+  ],
+  "license": "MIT",
+  "author": "opencode-workbench contributors",
+  "homepage": "https://github.com/YOUR_USER/opencode-workbench#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USER/opencode-workbench.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USER/opencode-workbench/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "os": [
+    "win32"
+  ],
+  "scripts": {
+    "verify": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-setup.ps1",
+    "doctor": "py -3 scripts/doctor.py",
+    "maintain": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/maintain.ps1",
+    "refresh": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/update-awgs.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/update-hack-skills.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/update-awgs-archive.ps1",
+    "vm:status": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/vmhelper.ps1 -Action status",
+    "vm:snap": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/vmhelper.ps1 -Action snap",
+    "vm:rollback": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/vmhelper.ps1 -Action rollback",
+    "registry:build": "py -3 knowledge/game-lab/scripts/game_registry.py --build",
+    "registry:validate": "py -3 knowledge/game-lab/scripts/game_registry.py --validate",
+    "selfcheck:game-lab": "powershell -NoProfile -ExecutionPolicy Bypass -File knowledge/game-lab/selfcheck.ps1",
+    "selfcheck:kernel-sec": "powershell -NoProfile -ExecutionPolicy Bypass -File knowledge/kernel-sec/selfcheck.ps1",
+    "sanitize": "py -3 tools/sanitize-and-copy.py"
+  },
+  "files": [
+    "AGENTS.md",
+    "README.md",
+    "README.ru.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "DISCLAIMER.md",
+    "THIRD_PARTY_NOTICES.md",
+    "collections.lock.json",
+    "install.ps1",
+    "config/",
+    "docs/",
+    "agents/",
+    "scripts/",
+    "knowledge/",
+    ".agents/"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "comment": [
+    "No runtime dependencies. This package ships configuration, documentation,",
+    "and scripts - not a library.",
+    "",
+    "The 21.2 GiB of reference collections (awesome-game-security, hack-skills,",
+    "cyber-skills, REA, and others) are declared as pinned runtime dependencies",
+    "in collections.lock.json and fetched by install.ps1. They are NOT npm",
+    "dependencies and are NOT vendored - see THIRD_PARTY_NOTICES.md.",
+    "",
+    "MCP servers (rea, cheat-mcp, js-reverse, jshook, context7, renderdoc) are",
+    "installed separately and governed by their own licenses. See",
+    "docs/mcp-servers.md."
+  ]
+}

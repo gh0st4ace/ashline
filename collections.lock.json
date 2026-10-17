@@ -1,0 +1,182 @@
+{
+  "$comment": [
+    "Authoritative record of every declared dependency of this workbench.",
+    "Nothing here is vendored - each entry is cloned at install time and pinned",
+    "to the commit below. See THIRD_PARTY_NOTICES.md for licenses and the",
+    "docs/collections.md page for the human-readable table.",
+    "",
+    "Update with: .\\scripts\\update-collections-lock.ps1"
+  ],
+  "generated_at": "2026-10-17",
+  "host_platform": "windows-x64",
+  "collections": [
+    {
+      "alias": "awesome-game-security",
+      "path": "D:/opencode/awesome-game-security",
+      "upstream": "https://github.com/gmh5225/awesome-game-security.git",
+      "commit": "808a055dfbb65d8ede9766c2c0521b10a0229593",
+      "committed_at": "2026-10-17T01:50:03Z",
+      "license": "MIT",
+      "size_gib": 3.05,
+      "fetch_method": "blobless-partial-clone",
+      "sparse_checkout": [".claude", "description", "scripts", "wiki"],
+      "update_script": "scripts/update-awgs.ps1",
+      "linked_skills": 12
+    },
+    {
+      "alias": "game-security-archive",
+      "path": "D:/opencode/awesome-game-security-archive",
+      "upstream": "https://github.com/gmh5225/awesome-game-security.git",
+      "commit": "808a055dfbb65d8ede9766c2c0521b10a0229593",
+      "license": "MIT",
+      "size_gib": 18.19,
+      "fetch_method": "tarball",
+      "source_url": "https://www.loldrivers.io/../github.com/gmh5225/awesome-game-security/archive/refs/heads/main.tar.gz",
+      "update_script": "scripts/update-awgs-archive.ps1",
+      "note": "Mirrored from the GitHub tarball, not git. Git lazy-blob fetching stalls at this size. Atomic directory swap; never half-written."
+    },
+    {
+      "alias": "hack-skills",
+      "path": "D:/opencode/hack-skills",
+      "upstream": "https://github.com/yaklang/hack-skills.git",
+      "commit": "6fbf0bc8d5c71830d62543a308d8744606c43d7c",
+      "committed_at": "2026-09-13T21:47:58+08:00",
+      "license": "MIT",
+      "size_gib": 0.01,
+      "fetch_method": "clone",
+      "update_script": "scripts/update-hack-skills.ps1",
+      "linked_skills": 93,
+      "skills_on_disk": 103,
+      "excluded_routers": [
+        "hack",
+        "api-sec",
+        "auth-sec",
+        "recon-for-sec",
+        "business-logic-vuln",
+        "injection-checking",
+        "file-access-vn",
+        "recon-and-methodology",
+        "api-recon-and-docs",
+        "api-auth-and-jwt-abuse"
+      ]
+    },
+    {
+      "alias": "cyber-skills",
+      "path": "D:/opencode/cybersecurity-skills",
+      "upstream": "https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git",
+      "commit": "54a798831d2266a3ca61ce68a7acb80b81160d57",
+      "committed_at": "2026-08-31T04:32:42Z",
+      "license": "Apache-2.0",
+      "size_gib": 0.04,
+      "fetch_method": "clone",
+      "skills_on_disk": 818,
+      "linked_skills": 0,
+      "note": "Reference only - too large for the skill catalog, so it is Grep-searched on demand. Read exactly one SKILL.md per question."
+    },
+    {
+      "alias": "game-hacking-refs",
+      "path": "D:/opencode/game-hacking-references",
+      "upstream": "https://github.com/dsasmblr/game-hacking.git",
+      "commit": "036026438ffd533338768bc29f0424c117e7c653",
+      "committed_at": "2023-02-12T17:11:39-05:00",
+      "license": "Unlicense",
+      "size_gib": 0.005,
+      "fetch_method": "clone"
+    },
+    {
+      "alias": "hacking-online-games",
+      "path": "D:/opencode/hacking-online-games",
+      "upstream": "https://github.com/dsasmblr/hacking-online-games.git",
+      "commit": "5630a8e7572dc2b9bb9550ff47c1498692b5bfd3",
+      "committed_at": "2023-02-12T17:11:14-05:00",
+      "license": "Unlicense",
+      "size_gib": 0.06,
+      "fetch_method": "clone"
+    },
+    {
+      "alias": "rea",
+      "path": "D:/opencode/rea",
+      "upstream": "https://github.com/morluto/rea.git",
+      "commit": "4d98123279c5a6f5442c458307f5a3ec678fd49e",
+      "committed_at": "2026-10-14T06:08:31+08:00",
+      "license": "MIT",
+      "size_gib": 0.01,
+      "fetch_method": "clone",
+      "note": "Source checkout. The live capability is the `rea` MCP server (npm rea-agents), not this directory."
+    }
+  ],
+  "supporting_repos": [
+    {
+      "alias": "ecc",
+      "path": "D:/opencode/ecc",
+      "upstream": "https://github.com/affaan-m/ecc.git",
+      "commit": "76aaa77df6adc5b889e689007bf99b9a4f74af34",
+      "committed_at": "2026-10-15T15:17:00-04:00",
+      "license": "MIT",
+      "role": "Supplies the 315 installed skills, 103 commands, 9 custom tools, hooks, and plugins. Not vendored; installed via its own installer.",
+      "local_adaptations": [
+        "plugins/ecc-hooks.ts and plugins/index.ts re-applied as OpenCode v2 shapes after each pull, with timestamped backups"
+      ]
+    },
+    {
+      "alias": "driver-samples",
+      "path": "D:/opencode/driver-samples",
+      "upstream": "https://github.com/microsoft/Windows-driver-samples",
+      "commit": "2dc3fd3a0cc84a2933f2194e7ec0871584979071",
+      "committed_at": "2026-09-25T14:57:27-07:00",
+      "license": "MS-PL",
+      "role": "Driver source reference - headers, samples, INF manifests. Pure source; zero .sys files.",
+      "size_gib": 0.11
+    },
+    {
+      "alias": "lol-drivers-feed",
+      "path": "D:/opencode/kernel-sec/knowledge/lol_drivers.json",
+      "source_url": "https://www.loldrivers.io/api/drivers.json",
+      "fetched_at": "2026-10-15T14:09:44",
+      "entries": 702,
+      "size_mb": 33.3,
+      "license": "see upstream",
+      "role": "Known-vulnerable-driver feed cache.",
+      "refresh_command": "curl.exe -sS -L -o knowledge\\lol_drivers.json https://www.loldrivers.io/api/drivers.json",
+      "note": "The feed carries NO provenance field. Provenance lives only in knowledge/README.md, which is why it is reproduced here.",
+      "verified": {
+        "raw_github_path_404": "raw.githubusercontent.com/.../main/drivers.json does not exist; the site API is canonical"
+      }
+    }
+  ],
+  "mcp_servers": {
+    "comment": "Six active. Each is installed separately and governed by its own license.",
+    "active": [
+      { "name": "rea", "package": "rea-agents", "tools": 170, "license": "MIT" },
+      { "name": "cheat-mcp", "source": "built-from-source", "tools": 72, "local_patch": "src/network.cpp: added #include <mstcpip.h>, required for SIO_RCVALL" },
+      { "name": "js-reverse", "package": "js-reverse-mcp", "tools": 24 },
+      { "name": "jshook", "package": "@jshookmcp/jshook", "tools": 8 },
+      { "name": "context7", "package": "@upstash/context7-mcp", "tools": 2 },
+      { "name": "renderdoc", "source": "prebuilt-windows-binary", "tools": null }
+    ],
+    "total_live_tools": 277,
+    "catalogued_candidates": 34,
+    "catalog_note": "config/mcp-configs/mcp-servers.json is a reference menu, not a config. All credentials are placeholders. Nothing in it is running."
+  },
+  "skill_roots": {
+    "comment": "Five roots. Three configured via `skills:`, two discovered by default. Counting only the configured roots undercounts by a third.",
+    "configured": [
+      { "name": "gameskills", "count": 12, "source": "awesome-game-security" },
+      { "name": "hackskills", "count": 93, "source": "hack-skills" },
+      { "name": "reaskills", "count": 3, "source": "rea contributors" }
+    ],
+    "default_discovery": [
+      { "name": "~/.agents/skills", "count": 64 },
+      { "name": "~/.config/opencode/skills", "count": 2 }
+    ],
+    "total": 174,
+    "name_collisions": 0,
+    "authored_in_this_repo": [
+      "game-engine-detection",
+      "game-memory-lab",
+      "game-modding-lab",
+      "anti-cheat-architecture",
+      "game-research-tool-discovery"
+    ]
+  }
+}

@@ -1,0 +1,1900 @@
+{
+ "_meta": {
+  "created": "2026-10-15",
+  "last_verified_sweep": "2026-10-15",
+  "source_of_truth": "this file; cards/*.md are RENDERED FROM IT",
+  "sources": [
+   "operator-supplied pairing (master task list 15.10.2026) = tag [O]",
+   "AC product family traits: ac_stack_map_50games.md (built on AreWeAntiCheatYet dataset + vendor pages) = tag [F]",
+   "measured on live installs: tag [measured] (see engine_fingerprint_cases.md, OBSIDIAN project docs)",
+   "regional/build-dependent rows: tag [~]"
+  ],
+  "confidence_tags": {
+   "[F]": "family-level fact from vendor docs/dataset; holds for years",
+   "[O]": "operator-supplied pairing, not yet re-verified against a live build",
+   "[~]": "regional/version-dependent; MUST be re-verified per client build",
+   "[measured]": "confirmed by our own instruments in this workspace",
+   "unverified": "plausible but not checked",
+   "unknown": "not established; do NOT invent"
+  },
+  "boundary": "Research reference only. No undetected-cheat development against third-party live anti-cheat (workspace policy). Operational steps on protected live titles stay read-only or out of scope; risky driver work goes to the ac-test VM only."
+ },
+ "games": [
+  {
+   "n": 1,
+   "title": "Counter-Strike 2",
+   "category": "shooter-fps",
+   "publisher": "Valve",
+   "developer": "Valve",
+   "platforms": "Windows, SteamOS/Linux (Steam page lists no macOS build) [F]",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Source 2",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "VAC [F]",
+    "VAC Live [F]"
+   ],
+   "ac_other": "server-side moderation/OVERWATCH human review [unverified]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [
+    "https://store.steampowered.com/app/730/CounterStrike_2/ (fetched 2026-10-15) [F]"
+   ],
+   "public_research": [
+    "Steam page (fetched 2026-10-15): 'Built on the Source 2 engine' [F]; 'Uses Anti-Cheat Software: VAC (Valve Anti-Cheat)' [F]; VAC Live not advertised on the store page [~]"
+   ],
+   "sources_sdk": [
+    "Source 2 workshop tools [F]",
+    "sourcemod/Metamod community ecosystem for CS:GO-era [unverified]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE (Ghidra/IDA/REA), ReClass; server-plugin route for behavior study",
+   "tool_limits": "VAC is user-mode only; VAC Live ban lists update live [F]",
+   "safe_modding": "official server plugins; custom game modes on own servers",
+   "host_risks": "standard client RE only; no kernel AC",
+   "next_tasks": [
+    "verify VAC Live status vs VAC legacy per current build",
+    "fill official links"
+   ]
+  },
+  {
+   "n": 2,
+   "title": "Valorant",
+   "category": "shooter-fps",
+   "publisher": "Riot Games",
+   "developer": "Riot Games",
+   "platforms": "Windows",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine (customized)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "Riot Vanguard [F]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "https://playvalorant.com/ (fetched 2026-10-15; serves locale variants) [F]"
+   ],
+   "public_research": [
+    "armvirus/VanguardTrace — vgk.sys encrypted import table (in archive mirror)"
+   ],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "kernel driver RE (Ghidra/IDA/REA), WinDbg on dumps; VM-only for operational steps",
+   "tool_limits": "vgk.sys loads at boot; HVCI compatibility strict [F]",
+   "safe_modding": "none; no mod channel",
+   "host_risks": "HIGH: boot-time kernel driver on host; any driver-level test goes to ac-test VM with snapshot",
+   "next_tasks": [
+    "verify current vgk build vs public research dates"
+   ]
+  },
+  {
+   "n": 3,
+   "title": "Rainbow Six Siege",
+   "category": "shooter-fps",
+   "publisher": "Ubisoft",
+   "developer": "Ubisoft Montreal",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary (Ubisoft internal)",
+    "conf": "~"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [F]"
+   ],
+   "ac_other": "server-side [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE, ReClass, cheat-mcp on own benches only",
+   "tool_limits": "BEService + BEDaisy.sys + per-game client DLL [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "confirm engine name from current build"
+   ]
+  },
+  {
+   "n": 4,
+   "title": "Apex Legends",
+   "category": "shooter-fps",
+   "publisher": "Electronic Arts",
+   "developer": "Respawn Entertainment",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Source (Respawn fork)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE (Source-family tooling, ReClass)",
+   "tool_limits": "EAC user-mode service + kernel driver; So blooming offloads [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 5,
+   "title": "Overwatch 2",
+   "category": "shooter-fps",
+   "publisher": "Blizzard Entertainment",
+   "developer": "Blizzard Entertainment",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "Defense Matrix + server-side [~]"
+   ],
+   "ac_other": "Warden-family in-scan [unverified]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; behavioral research via own servers only",
+   "tool_limits": "client add-on composition varies by build [~]",
+   "safe_modding": "none known",
+   "host_risks": "low (no known kernel component)",
+   "next_tasks": [
+    "confirm whether Defense Matrix includes kernel driver in current build"
+   ]
+  },
+  {
+   "n": 6,
+   "title": "Call of Duty: Warzone",
+   "category": "shooter-fps",
+   "publisher": "Activision",
+   "developer": "Infinity Ward/Raven/Treyarch (shared)",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "IW engine (CoD branch)",
+    "conf": "~"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "RICOCHET [F]"
+   ],
+   "ac_other": "server-side moderation [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only for driver steps",
+   "tool_limits": "kernel driver + periodic scans; no mod channel [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "verify RICOCHET kernel component still active per current build"
+   ]
+  },
+  {
+   "n": 7,
+   "title": "Call of Duty: Black Ops 7",
+   "category": "shooter-fps",
+   "publisher": "Activision",
+   "developer": "Treyarch",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; release-window title",
+   "version_verified": "unverified (title in release window)",
+   "engine": {
+    "v": "IW engine (CoD branch)",
+    "conf": "~"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "RICOCHET [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only for driver steps",
+   "tool_limits": "same RICOCHET family traits [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "confirm shipped AC configuration at release"
+   ]
+  },
+  {
+   "n": 8,
+   "title": "PUBG: Battlegrounds",
+   "category": "shooter-fps",
+   "publisher": "Krafton",
+   "developer": "PUBG Studios",
+   "platforms": "Windows, consoles, mobile (separate build)",
+   "region_notes": "global; mobile build differs",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "additional proprietary layers [~]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native UE RE (ReClass, Rea), VM-only driver steps",
+   "tool_limits": "BattlEye family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "identify the extra proprietary layers"
+   ]
+  },
+  {
+   "n": 9,
+   "title": "THE FINALS",
+   "category": "shooter-fps",
+   "publisher": "Nexon (Embark Studios)",
+   "developer": "Embark Studios",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 5",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "Embark own layers [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE5 RE (ReClass, dumper candidates in DISCOVERY_SHEET)",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "Embark proprietary layers check"
+   ]
+  },
+  {
+   "n": 10,
+   "title": "Delta Force",
+   "category": "shooter-fps",
+   "publisher": "Tencent (TiMi/Team Jade)",
+   "developer": "Team Jade",
+   "platforms": "Windows, consoles, mobile (separate)",
+   "region_notes": "region-locked client builds",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "~"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "ACE (Anti-Cheat Expert) [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; region-locked telemetry endpoints differ per version [F]",
+   "tool_limits": "ACE dual user/kernel, cross-region builds [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "verify engine version",
+    "regional endpoint map"
+   ]
+  },
+  {
+   "n": 11,
+   "title": "Battlefield 2042",
+   "category": "shooter-fps",
+   "publisher": "Electronic Arts",
+   "developer": "DICE",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Frostbite",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EA AntiCheat [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE (Frostbite struct research is community-documented [unverified])",
+   "tool_limits": "EAAC kernel-mode pack [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 12,
+   "title": "Battlefield 6",
+   "category": "shooter-fps",
+   "publisher": "Electronic Arts",
+   "developer": "DICE/Criterion/Motive (shared)",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; new title",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Frostbite",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EA Javelin AntiCheat [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only driver steps",
+   "tool_limits": "Javelin kernel-mode EAAC pack [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "confirm Javelin vs EAAC naming/build internals"
+   ]
+  },
+  {
+   "n": 13,
+   "title": "Team Fortress 2",
+   "category": "shooter-fps",
+   "publisher": "Valve",
+   "developer": "Valve",
+   "platforms": "Windows, macOS, Linux",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Source",
+    "conf": "F"
+   },
+   "client_arch": "native x64 (Source 1 32-bit legacy) [unverified]",
+   "ac_confirmed": [
+    "VAC [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side admin tools (SourceMod) [F]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "Source SDK (public) [F]",
+    "SourceMod ecosystem [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native Source RE; server-plugin route",
+   "tool_limits": "VAC user-mode only [F]",
+   "safe_modding": "SourceMod on own servers (outside VAC where allowed) [F]",
+   "host_risks": "low",
+   "next_tasks": [
+    "confirm client bitness on current build"
+   ]
+  },
+  {
+   "n": 14,
+   "title": "CrossFire",
+   "category": "shooter-fps",
+   "publisher": "Smilegate",
+   "developer": "Smilegate",
+   "platforms": "Windows",
+   "region_notes": "REGIONAL clients: protection differs per publisher (China/KR/SEA/West)",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "unverified (regional builds differ)",
+    "conf": "~"
+   },
+   "client_arch": "native x86/x64 [unverified]",
+   "ac_confirmed": [
+    "regional client protection [~]",
+    "[O]"
+   ],
+   "ac_other": "unknown",
+   "components": {
+    "um": null,
+    "kernel": null,
+    "server": null
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "set per client build before any RE",
+   "tool_limits": "unknown",
+   "safe_modding": "none known",
+   "host_risks": "per regional client; verify first",
+   "next_tasks": [
+    "identify regional client variants and their protection per build"
+   ]
+  },
+  {
+   "n": 15,
+   "title": "Point Blank",
+   "category": "shooter-fps",
+   "publisher": "Zepetto (regional ops vary)",
+   "developer": "Zepetto",
+   "platforms": "Windows",
+   "region_notes": "REGIONAL clients (ID/TH/TR/RU etc.), protection varies",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "unverified",
+    "conf": "~"
+   },
+   "client_arch": "native x86/x64 [unverified]",
+   "ac_confirmed": [
+    "regional client protection [~]",
+    "[O]"
+   ],
+   "ac_other": "unknown",
+   "components": {
+    "um": null,
+    "kernel": null,
+    "server": null
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "set per client build before any RE",
+   "tool_limits": "unknown",
+   "safe_modding": "none known",
+   "host_risks": "per regional client; verify first",
+   "next_tasks": [
+    "identify regional client variants and their protection per build"
+   ]
+  },
+  {
+   "n": 16,
+   "title": "Fortnite",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Epic Games",
+   "developer": "Epic Games",
+   "platforms": "Windows, macOS, consoles, mobile (separate builds)",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 5",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [
+    "UE editor + UEFN (official creator route) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE5 RE; UEFN is the sanctioned creation channel",
+   "tool_limits": "two AC streams run simultaneously [F]",
+   "safe_modding": "UEFN/creative on official platform [F]",
+   "host_risks": "kernel drivers present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 17,
+   "title": "Rust",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Facepunch Studios",
+   "developer": "Facepunch Studios",
+   "platforms": "Windows, macOS, Linux (Linux client unverified)",
+   "region_notes": "global; community servers",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity managed (Mono/IL2CPP per build) [~]",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side admin (Oxide/uMod ecosystem on community servers) [F]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "https://playrust.com/ (fetched 2026-10-15) [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [
+    "server-side modding frameworks for community servers [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "IL2CPP/Mono dumpers (installed), native RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "community server plugin ecosystem [F]",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "confirm Mono vs IL2CPP on current build"
+   ]
+  },
+  {
+   "n": 18,
+   "title": "DayZ",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Bohemia Interactive",
+   "developer": "Bohemia Interactive",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; community servers",
+   "version_verified": "unverified build; 1.29 offsets reference exists",
+   "engine": {
+    "v": "Enfusion (custom native)",
+    "conf": "measured"
+   },
+   "client_arch": "native x64 [measured]",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side validation [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "https://store.steampowered.com/app/221100/DayZ/ (fetched 2026-10-15) [F]"
+   ],
+   "public_research": [
+    "DayZ Bible UC thread 774987 (v1.29) -> local research note DAYZ_OFFSETS_1.29_REFERENCE.md (private project, not redistributed)",
+    "DayZ-Dumper offset table — REFUTED as constant source on our client (see kernel-sec/game-lab CONSTRAINTS), where-to-look only",
+    "own measured: World 0x4262FE8, NetworkManager 0x100EBD0 (object, not pointer), camera basis path in world_to_screen PROVEN live",
+    "Steam page (fetched 2026-10-15): 'Uses Kernel Level Anti-Cheat: BattlEye — requires manual removal after game uninstall' and copyright 'includes BattlEye(TM) anti-cheat technology' [F] — SECOND independent confirmation of kernel component"
+   ],
+   "sources_sdk": [
+    "Enfusion/DayZ server modding (official) [F]",
+    "own client-side research overlays in OBSIDIAN project"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE + live memory research (measured extensively in OBSIDIAN project); camera layout confirmed two ways (pattern + disassembly)",
+   "tool_limits": "dumper table uncorroborated — measured offsets only; ArmaString layout (+0x08 len, +0x10 text)",
+   "safe_modding": "official server modding; client-side overlay research is operator's own project (OBSIDIAN)",
+   "host_risks": "BattlEye on host during play; overlay project runs on host by design",
+   "next_tasks": [
+    "code the proven basis-based world_to_screen into OBSIDIAN world.cpp (HANDOFF ДОПОЛНЕНИЕ 44)",
+    "projection coefficients (0.7813/1.3890 vs 1/x relationship) still to resolve in code"
+   ],
+   "notes": " dayz.com returned HTTP 403 to non-browser fetch (2026-10-15); CDN-blocked, not evidence of absence; verify in a browser when filling the game's own link."
+  },
+  {
+   "n": 19,
+   "title": "Escape from Tarkov",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Battlestate Games",
+   "developer": "Battlestate Games",
+   "platforms": "Windows",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity managed (Mono per common knowledge) [~]",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "own proprietary layers [~]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "Mono/IL2CPP dumpers (installed); native RE",
+   "tool_limits": "BSG rolls its own wrappers silently [~] — re-verify per build",
+   "safe_modding": "none; SPT (single-player mod) exists as community route [unverified]",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "re-verify own-layer composition per build"
+   ]
+  },
+  {
+   "n": 20,
+   "title": "ARC Raiders",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Embark Studios/Nexon",
+   "developer": "Embark Studios",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; new title",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 5",
+    "conf": "~"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "extra protection layers [~]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE5 RE; VM-only driver steps",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "identify extra layers",
+    "verify engine"
+   ]
+  },
+  {
+   "n": 21,
+   "title": "Hunt: Showdown 1896",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Crytek",
+   "developer": "Crytek",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "CryEngine (Crytek)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native CryEngine RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 22,
+   "title": "Arena Breakout: Infinite",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Tencent (MoreFun Studios)",
+   "developer": "MoreFun Studios",
+   "platforms": "Windows",
+   "region_notes": "regional builds; China-first",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "~"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "ACE [F]",
+    "[O]"
+   ],
+   "ac_other": "extra proprietary layers [~]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; region-locked telemetry [F]",
+   "tool_limits": "ACE family traits [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "regional endpoint map",
+    "verify engine"
+   ]
+  },
+  {
+   "n": 23,
+   "title": "ARK: Survival Ascended",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Studio Wildcard",
+   "developer": "Grove Street Games/Studio Wildcard",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; official + community servers",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 5",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [
+    "ARK server modding (official mod support) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE5 RE; server mod route",
+   "tool_limits": "BattlEye family traits [F]",
+   "safe_modding": "official server mods on own/community servers",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 24,
+   "title": "ARK: Survival Evolved",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Studio Wildcard",
+   "developer": "Studio Wildcard/Instinct Games",
+   "platforms": "Windows, consoles, Linux servers",
+   "region_notes": "global; per-server BattlEye flags",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [
+    "ARK Dev Kit (official) [F]",
+    "server modding (official mod support) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE4 RE; Dev Kit route",
+   "tool_limits": "BattlEye can be disabled per-server flag on unofficial servers [F]",
+   "safe_modding": "Dev Kit mods on own servers; per-server EAC-off flags",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 25,
+   "title": "Sea of Thieves",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Microsoft (Rare)",
+   "developer": "Rare",
+   "platforms": "Windows, Xbox, PS5 [unverified]",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE4 RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "confirm PS5 build AC parity"
+   ]
+  },
+  {
+   "n": 26,
+   "title": "SCUM",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "Devolver (Gamepires)",
+   "developer": "Gamepires",
+   "platforms": "Windows",
+   "region_notes": "global; community servers",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "server-side admin/mod support [unverified]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE4 RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "community servers",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 27,
+   "title": "7 Days to Die",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "The Fun Pimps",
+   "developer": "The Fun Pimps",
+   "platforms": "Windows, consoles, Linux servers",
+   "region_notes": "global; per-server EAC flags",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity managed (Mono) [F]",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "dedicated-server XML modding (official) [F]",
+    "EAC-off per-server flag [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "Mono dumpers (installed); XML modding route",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "official dedicated-server flags let EAC off; PVE route is legal config [F]",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 28,
+   "title": "Day of Dragons",
+   "category": "battle-royale-survival-extraction",
+   "publisher": "unknown",
+   "developer": "unknown",
+   "platforms": "Windows [unverified]",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "~"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "per-build [~]",
+    "[O]"
+   ],
+   "ac_other": "unknown",
+   "components": {
+    "um": null,
+    "kernel": null,
+    "server": null
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "set per build",
+   "tool_limits": "unknown",
+   "safe_modding": "unknown",
+   "host_risks": "verify per build",
+   "next_tasks": [
+    "identify current build + protection"
+   ]
+  },
+  {
+   "n": 29,
+   "title": "League of Legends",
+   "category": "moba-competitive",
+   "publisher": "Riot Games",
+   "developer": "Riot Games",
+   "platforms": "Windows, macOS",
+   "region_notes": "global; regional servers",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native (mixed managed UI) [unverified]",
+   "ac_confirmed": [
+    "Riot Vanguard [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side behavioral [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only driver steps",
+   "tool_limits": "vgk.sys boot-load policy [F]",
+   "safe_modding": "none; replay/tools ecosystem is sanctioned (unofficial APIs) [unverified]",
+   "host_risks": "HIGH: boot-time kernel driver on host",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 30,
+   "title": "Dota 2",
+   "category": "moba-competitive",
+   "publisher": "Valve",
+   "developer": "Valve",
+   "platforms": "Windows, macOS, Linux",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Source 2",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "VAC [F] + server-side [~]",
+    "[O]"
+   ],
+   "ac_other": "matchmaking-behavioral (OVERWATCH-style) [unverified]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "Steam Workshop/custom games (official) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native Source 2 RE; custom-game route",
+   "tool_limits": "VAC user-mode [F]",
+   "safe_modding": "custom games on official platform",
+   "host_risks": "low",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 31,
+   "title": "Smite 2",
+   "category": "moba-competitive",
+   "publisher": "Hi-Rez Studios",
+   "developer": "Hi-Rez Studios/Titan Forge",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 5",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE5 RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 32,
+   "title": "Heroes of the Storm",
+   "category": "moba-competitive",
+   "publisher": "Blizzard Entertainment",
+   "developer": "Blizzard Entertainment",
+   "platforms": "Windows, macOS",
+   "region_notes": "global; maintenance-mode title",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "Warden + server-side [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE",
+   "tool_limits": "Warden is in-scan through game exe, no kernel [F]",
+   "safe_modding": "none; community-run private realms exist [unverified]",
+   "host_risks": "low",
+   "next_tasks": [
+    "maintenance-mode status check"
+   ]
+  },
+  {
+   "n": 33,
+   "title": "Deadlock",
+   "category": "moba-competitive",
+   "publisher": "Valve",
+   "developer": "Valve",
+   "platforms": "Windows (invite/test phase)",
+   "region_notes": "global; under development",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Source 2",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "Valve own system (Vacnet-extended) [~]",
+    "[O]"
+   ],
+   "ac_other": "server-side Vacnet ML [F]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "Source 2 workshop (official) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native Source 2 RE",
+   "tool_limits": "system is evolving; expect changes between builds [~]",
+   "safe_modding": "workshop route on official platform",
+   "host_risks": "low",
+   "next_tasks": [
+    "track AC evolution across builds"
+   ]
+  },
+  {
+   "n": 34,
+   "title": "Destiny 2",
+   "category": "mmo-rpg",
+   "publisher": "Bungie (Sony)",
+   "developer": "Bungie",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary (Tiger engine)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side validation heavy [unverified]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only driver steps",
+   "tool_limits": "BattlEye family traits [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 35,
+   "title": "Lost Ark",
+   "category": "mmo-rpg",
+   "publisher": "Amazon Games (West)/Smilegate",
+   "developer": "Smilegate",
+   "platforms": "Windows",
+   "region_notes": "regional publishers (KR/West) — protection may differ",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 3",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "regional variations [~]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE3-era native RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "regional variant check"
+   ]
+  },
+  {
+   "n": 36,
+   "title": "New World: Aeternum",
+   "category": "mmo-rpg",
+   "publisher": "Amazon Games",
+   "developer": "Amazon Games Orange County",
+   "platforms": "Windows, consoles [unverified]",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Amazon Lumberyard (custom)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 37,
+   "title": "Black Desert Online",
+   "category": "mmo-rpg",
+   "publisher": "Pearl Abyss (regional ops vary)",
+   "developer": "Pearl Abyss",
+   "platforms": "Windows, consoles, mobile (separate)",
+   "region_notes": "REGIONAL clients; XignCode-family historically",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "regional protection [~]",
+    "[O]"
+   ],
+   "ac_other": "XignCode3 family historically [unverified]",
+   "components": {
+    "um": true,
+    "kernel": null,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "verify build first",
+   "tool_limits": "unknown",
+   "safe_modding": "none known",
+   "host_risks": "verify per regional client",
+   "next_tasks": [
+    "identify current protection per regional build"
+   ]
+  },
+  {
+   "n": 38,
+   "title": "Guild Wars 2",
+   "category": "mmo-rpg",
+   "publisher": "NCSoft (ArenaNet)",
+   "developer": "ArenaNet",
+   "platforms": "Windows, macOS client [unverified]",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "server-side behavioral [F]",
+    "[O]"
+   ],
+   "ac_other": "no client AC known",
+   "components": {
+    "um": false,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "protocol/server-scope research",
+   "tool_limits": "no client process protection; RE burden shifts to protocol scope [F]",
+   "safe_modding": "unofficial third-party tools tolerated per ArenaNet policy [unverified]",
+   "host_risks": "low",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 39,
+   "title": "World of Warcraft",
+   "category": "mmo-rpg",
+   "publisher": "Blizzard Entertainment",
+   "developer": "Blizzard Entertainment",
+   "platforms": "Windows, macOS",
+   "region_notes": "global; Classic/Retail tracks",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "Warden [F]",
+    "[O]"
+   ],
+   "ac_other": "server-side validation [unverified]",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "addon API (official, sandboxed) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; addon API route for sanctioned automation study",
+   "tool_limits": "Warden in-scan through game exe, no kernel [F]",
+   "safe_modding": "official addon API",
+   "host_risks": "low",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 40,
+   "title": "Final Fantasy XIV",
+   "category": "mmo-rpg",
+   "publisher": "Square Enix",
+   "developer": "Square Enix (Creative Business Unit III)",
+   "platforms": "Windows, macOS, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 [unverified]",
+   "ac_confirmed": [
+    "server-side + in-client proprietary [~]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; behavior moderation is account-based [F]",
+   "tool_limits": "proprietary composition per build [~]",
+   "safe_modding": "none; third-party tools are against ToS but widely used [unverified]",
+   "host_risks": "low",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 41,
+   "title": "Albion Online",
+   "category": "mmo-rpg",
+   "publisher": "Sandbox Interactive",
+   "developer": "Sandbox Interactive",
+   "platforms": "Windows, macOS, Linux, mobile (cross-play)",
+   "region_notes": "global; single shard architecture",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity managed (Mono/IL2CPP per build) [~]",
+   "ac_confirmed": [
+    "server-side checks + client component [~]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "Mono/IL2CPP dumpers; protocol research",
+   "tool_limits": "proprietary composition per build [~]",
+   "safe_modding": "none known",
+   "host_risks": "low",
+   "next_tasks": [
+    "verify client build composition"
+   ]
+  },
+  {
+   "n": 42,
+   "title": "EVE Online",
+   "category": "mmo-rpg",
+   "publisher": "CCP Games",
+   "developer": "CCP Games",
+   "platforms": "Windows, macOS",
+   "region_notes": "global; single-shard universe",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary in-house",
+    "conf": "F"
+   },
+   "client_arch": "native x64 (Python-embedded stack historically) [~]",
+   "ac_confirmed": [
+    "server-side [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": false,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "EVE ESI API (official) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "protocol/network research",
+   "tool_limits": "server-authoritative economy; client RE of low value",
+   "safe_modding": "third-party tools per CCP policy (unofficial APIs) [F]",
+   "host_risks": "low",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 43,
+   "title": "Rocket League",
+   "category": "other-online",
+   "publisher": "Epic Games (Psyonix)",
+   "developer": "Psyonix",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4 (Psyonix custom)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE4 RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known (post-Epic transition)",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "re-verify AC pairing per live build (Epic transition history)"
+   ]
+  },
+  {
+   "n": 44,
+   "title": "Dead by Daylight",
+   "category": "other-online",
+   "publisher": "Behaviour Interactive",
+   "developer": "Behaviour Interactive",
+   "platforms": "Windows, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unreal Engine 4",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "UE4 RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "none known",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 45,
+   "title": "War Thunder",
+   "category": "other-online",
+   "publisher": "Gaijin Entertainment",
+   "developer": "Gaijin Entertainment",
+   "platforms": "Windows, macOS, Linux, consoles",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary (Dagor)",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "EAC [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [
+    "user missions/content tools (official) [F]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE",
+   "tool_limits": "EAC family traits [F]",
+   "safe_modding": "official content/mission tools",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 46,
+   "title": "GTA Online",
+   "category": "other-online",
+   "publisher": "Rockstar Games",
+   "developer": "Rockstar North",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; PC BattlEye rollout",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "RAGE",
+    "conf": "F"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "BattlEye [~]",
+    "[O]"
+   ],
+   "ac_other": "Rockstar server-side [F]",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [
+    "protection vendor: https://www.battleye.com/ (fetched 2026-10-15; self-describes 'Fully proactive kernel-based protection system') [F]"
+   ],
+   "public_research": [],
+   "sources_sdk": [
+    "FiveM/RAGE MP — third-party multiplayer clients (legal status varies; Rockstar policy 2024+) [unverified]"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only driver steps",
+   "tool_limits": "BattlEye family traits [F]",
+   "safe_modding": "single-player mods (outside GTA Online); FiveM ecosystems per current policy",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "verify BattlEye rollout completeness on current build"
+   ]
+  },
+  {
+   "n": 47,
+   "title": "Roblox",
+   "category": "other-online",
+   "publisher": "Roblox Corporation",
+   "developer": "Roblox Corporation",
+   "platforms": "Windows, macOS, consoles, mobile",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "proprietary (Roblox engine)",
+    "conf": "F"
+   },
+   "client_arch": "native x64 (Luau bytecode VM) [F]",
+   "ac_confirmed": [
+    "Hyperion + server-side [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [
+    "Hyperion: heavy anti-tamper user-mode client, obfuscated/VM-protected bytecode; not publicly detailed [F]"
+   ],
+   "sources_sdk": [
+    "Roblox Studio (official) [F]",
+    "Luau bytecode format — public compiler tooling (luau-compile, unluau installed in this workspace)"
+   ],
+   "known_vulns": "none collected",
+   "analysis_methods": "Luau bytecode analysis (own skills: luau-roblox-reverse), native RE",
+   "tool_limits": "Hyperion not publicly detailed [F]",
+   "safe_modding": "Roblox Studio game creation (official channel)",
+   "host_risks": "no kernel driver known; client anti-tamper is strict",
+   "next_tasks": [
+    "fill official links"
+   ]
+  },
+  {
+   "n": 48,
+   "title": "Genshin Impact",
+   "category": "other-online",
+   "publisher": "HoYoverse (miHoYo)",
+   "developer": "HoYoverse",
+   "platforms": "Windows, consoles, mobile, PS",
+   "region_notes": "regional builds (CN/global)",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity (IL2CPP per common knowledge) [~]",
+   "ac_confirmed": [
+    "HoYoverse self-protection (embedded DRM + client integrity) [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": false,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "IL2CPP dumpers (installed); native RE",
+   "tool_limits": "no named AC product; embedded protection not publicly detailed [F]",
+   "safe_modding": "none",
+   "host_risks": "low (no kernel driver known)",
+   "next_tasks": [
+    "confirm IL2CPP vs Mono per current build"
+   ]
+  },
+  {
+   "n": 49,
+   "title": "Marvel Rivals",
+   "category": "other-online",
+   "publisher": "NetEase",
+   "developer": "NetEase",
+   "platforms": "Windows, consoles",
+   "region_notes": "global; new title",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Unity",
+    "conf": "F"
+   },
+   "client_arch": "Unity (IL2CPP per common knowledge) [~]",
+   "ac_confirmed": [
+    "NetEase self-protection [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": null,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "IL2CPP dumpers (installed); native RE",
+   "tool_limits": "proprietary on-client detection, per-title [F]",
+   "safe_modding": "none",
+   "host_risks": "verify kernel presence per build",
+   "next_tasks": [
+    "confirm kernel component presence",
+    "confirm IL2CPP vs Mono"
+   ]
+  },
+  {
+   "n": 50,
+   "title": "Helldivers 2",
+   "category": "other-online",
+   "publisher": "Sony (Arrowhead Game Studios)",
+   "developer": "Arrowhead Game Studios",
+   "platforms": "Windows, PS5",
+   "region_notes": "global",
+   "version_verified": "unverified",
+   "engine": {
+    "v": "Autodesk Stingray (in-house fork) [~]",
+    "conf": "~"
+   },
+   "client_arch": "native x64",
+   "ac_confirmed": [
+    "nProtect GameGuard [F]",
+    "[O]"
+   ],
+   "ac_other": "none known",
+   "components": {
+    "um": true,
+    "kernel": true,
+    "server": true
+   },
+   "official_links": [],
+   "public_research": [],
+   "sources_sdk": [],
+   "known_vulns": "none collected",
+   "analysis_methods": "native RE; VM-only driver steps",
+   "tool_limits": "GameGuard.des + kernel driver combo [F]",
+   "safe_modding": "none",
+   "host_risks": "kernel driver present on host during play",
+   "next_tasks": [
+    "fill official links"
+   ]
+  }
+ ]
+}

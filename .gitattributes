@@ -1,0 +1,45 @@
+# Normalize to LF in the repository, accept CRLF on checkout on Windows.
+#
+# Why this matters here specifically:
+#   * .ps1 files must be readable as ANSI by Windows PowerShell 5.1 when they
+#     are BOM-free. LF endings avoid the mixed-ending class of bug.
+#   * Skill SKILL.md frontmatter is parsed by YAML readers that are sensitive
+#     to a BOM and to mixed line endings. Both are prevented here.
+#   * A BOM is the real hazard and it is banned below rather than normalized:
+#     `utf8` in PowerShell 5.1 emits one.
+
+* text=auto eol=lf
+
+# Never a BOM. YAML frontmatter and JSON5 configs both break on one.
+*.md   text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Shell and batch scripts: CRLF is required for .cmd on Windows.
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+
+# .ps1 content must stay ASCII (PS 5.1 reads a BOM-less file as ANSI).
+# Enforced by tools/gate.py - not via working-tree-encoding, which silently
+# transcodes and would hide the problem instead of reporting it.
+# Binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.mp4  binary
+*.rdc  binary
+*.exe  binary
+*.dll  binary
+*.sys  binary
+*.pdb  binary
+*.zip  binary
+*.gz   binary
+
+# Never mangle these even if a heuristic thinks they are text.
+collections.lock.json -diff
+package-lock.json -diff

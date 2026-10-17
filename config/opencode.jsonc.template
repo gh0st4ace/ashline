@@ -1,0 +1,228 @@
+// ============================================================================
+// OpenCode Workbench - configuration template
+//
+// Placeholders are substituted by install.ps1:
+//   ${CONFIG_DIR}        the OpenCode config root, default ~/.config/opencode
+//   ${COLLECTIONS_DIR}   where reference collections are cloned, default D:\opencode
+//   ${TOOLS_DIR}         where RE toolchains live, default D:\Tools
+//   ${NODE}              path to node.exe
+//
+// DELIBERATE OMISSIONS - do not "fix" these without reading the reason.
+// Each one was removed after a specific failure; all six are documented in
+// docs/architecture.md#config-decisions-worth-remembering.
+//
+//  1. NO "default_agent". An agent pinned to a free model as the config
+//     default makes EVERY new session fail with FreeUsageLimitError (429) once
+//     the quota is exhausted. It also caused Session.AgentNotFoundError.
+//     Without this line the agent is picked in the UI and remembered per
+//     session.
+//
+//  2. Plugin versions are PINNED, never "@latest". "@latest" re-resolves on
+//     every load and leaves .staging-* directories behind. 746 MB were
+//     reclaimed this way.
+//
+//  3. "compaction" carries ONLY supported keys. "auto" and "reserved" are
+//     accepted. The legacy "tail_turns" and "prune" keys are silently dropped
+//     by the engine with a warning, so they are not here.
+//
+//  4. Working directory must NOT be C:\WINDOWS\system32. Each MCP server is
+//     spawned per directory, so the tool set doubles there - measured: 368
+//     tools instead of 184.
+//
+//  5. "read"/"external_directory" are granted BEFORE "edit": deny on each
+//     collection. The deny is the load-bearing half; a deny you did not write
+//     down is a deny that will be misunderstood.
+//
+//  6. Skill roots are FIVE, not three. Two are discovered by default and are
+//     not listed here. Counting only the roots in this array undercounts the
+//     catalog by a third.
+//
+// If you change any of the above, update this comment block in the same commit.
+// ============================================================================
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // ---- Plugins: pinned versions only. See omission 2. ----
+  "plugins": ["opencode-mem@2.31.2", "adaptive-thinking@2.0.0"],
+
+  // ---- Slash commands ----
+  // All six are operational. Each runs a script rather than instructing an
+  // agent to improvise, so their behaviour is reproducible.
+  "commands": {
+    "verify": {
+      "description": "Health check the whole stack: configs, skills, references, REA engines, memory, tooling",
+      "template": "Run the workspace health check and report what is failing:\n\n!`powershell -NoProfile -ExecutionPolicy Bypass -File \"${CONFIG_DIR}\\scripts\\verify-setup.ps1\"`\n\nSummarize the failures, and only then propose fixes. Do not change anything before I have seen the output."
+    },
+    "doctor": {
+      "description": "Runtime health: engine versions, ghost sessions, cache, project, client identity",
+      "template": "Run and show the full output:\n\n!`py -3 \"${CONFIG_DIR}\\scripts\\doctor.py\"`\n\nThen explain every [BAD] and [warn] line: what is broken, what it risks, and the concrete fix. Engine version desync, ghost sessions in drafts.sqlite, sessions without compression, and game-client identity mismatch are not trivia - they are why work stopped before."
+    },
+    "stack": {
+      "description": "One-screen status of skills, collections, tools, engines, memory, and what is broken",
+      "template": "Give a one-screen status of this workspace: how many skills are registered and from which of the FIVE roots, which reference collections are present and their size, which REA providers are available, whether persistent memory answers, and anything currently broken. Read the inventory in ${CONFIG_DIR}\\AGENTS.md first, then verify anything that looks stale. Be brief and concrete - no prose, just the facts."
+    },
+    "refresh": {
+      "description": "Pull the latest upstream content for every collection and re-link skills",
+      "template": "Refresh all installed collections. Run these in order and report each result:\n\n1. `& \"${CONFIG_DIR}\\scripts\\update-awgs.ps1\"`\n2. `& \"${CONFIG_DIR}\\scripts\\update-hack-skills.ps1\"`\n3. `& \"${CONFIG_DIR}\\scripts\\update-awgs-archive.ps1\"`  (add -Force to re-download the 18 GiB tarball)\n\nThen run verify-setup.ps1 and tell me whether anything broke."
+    },
+    "re": {
+      "description": "Reverse-engineer a binary with REA. Use /re <path> [address] - default provider is ghidra",
+      "template": "Reverse-engineer the binary at: $ARGUMENTS\n\nLoad the `reverse-engineer-anything` skill first. Pass an ADDRESS rather than a bare function name to REA. Provider is ghidra by default; use `--provider ida` only if I explicitly asked for IDA, and if so run start-ida-mcp.ps1 on the binary first rather than opening the GUI unprompted.\n\nStart with list_procedures to learn the address space, then decompile what matters and report what the program actually does with Evidence."
+    },
+    "state": {
+      "description": "Project state summary without reading a large handoff file",
+      "template": "Run the project's state summary and continue from where it stopped. Do not read a multi-thousand-line handoff file in full - it will destroy the context window."
+    }
+  },
+
+  "compaction": {
+    "auto": true,
+    "reserved": 40000,
+    "preserve_recent_tokens": 20000
+  },
+
+  // A single command at 1 MiB could consume a quarter of the context.
+  "tool_output": {
+    "max_lines": 2000,
+    "max_bytes": 262144
+  },
+
+  // ---- Skill roots, CONFIGURED subset only ----
+  // See omission 6. Two further roots are discovered automatically:
+  //   ~/.agents/skills                (64 skills)
+  //   ~/.config/opencode/skills       (2 skills)
+  "skills": [
+    "${CONFIG_DIR}/gameskills",
+    "${CONFIG_DIR}/hackskills",
+    "${CONFIG_DIR}/reaskills"
+  ],
+
+  // ---- Reference collections ----
+  // `description` says WHEN to use it, not what it contains. `hidden` keeps a
+  // large collection out of the per-step context until it is actually opened.
+  "references": {
+    "awesome-game-security": {
+      "path": "${COLLECTIONS_DIR}/awesome-game-security",
+      "description": "Game-security knowledge base: ~40k project summaries in description/<owner>/<repo>/description_*.txt, category taxonomy in README.md, generated wiki/ pages, and 13 domain skills. Use for game hacking, anti-cheat, DMA, kernel, graphics-API, engine, mobile, server, and supply-chain game-security research. Grep with a specific owner, repo, or keyword - never glob the tree."
+    },
+    "game-security-archive": {
+      "path": "${COLLECTIONS_DIR}/awesome-game-security-archive",
+      "description": "Primary source mirrors for awesome-game-security: archive/<owner>/<repo>/ holds the actual upstream project files. Consult only when a summary in awesome-game-security cannot establish what a tool actually does. ~18 GiB - target one project.",
+      "hidden": true
+    },
+    "hack-skills": {
+      "path": "${COLLECTIONS_DIR}/hack-skills",
+      "description": "yaklang/hack-skills: practical security skills for web, API, AD, cloud, mobile, binary, crypto, network, and blue-team work. Route to a LEAF skill by behaviour, not to the `hack` router - its catch-all description wins the match on nearly every task and then applies its own gate. Read one SKILL.md per question."
+    },
+    "cyber-skills": {
+      "path": "${COLLECTIONS_DIR}/cybersecurity-skills",
+      "description": "mukul975/Anthropic-Cybersecurity-Skills: 818 security skills on disk at skills/<name>/SKILL.md, indexed by index.json and mapped to 291 MITRE ATT&CK techniques in ATTACK_COVERAGE.md. Grep directory names for a keyword when no installed skill covers the topic, then read exactly one SKILL.md."
+    },
+    "game-hacking-refs": {
+      "path": "${COLLECTIONS_DIR}/game-hacking-references",
+      "description": "dsasmblr/game-hacking: curated tutorials and tools for reverse engineering video games. Read when learning or locating a technique for game RE, memory inspection, or engine work."
+    },
+    "hacking-online-games": {
+      "path": "${COLLECTIONS_DIR}/hacking-online-games",
+      "description": "dsasmblr/hacking-online-games: curated resource list plus PDFs covering GameGuard architecture, server-side emulation, pointer scanning, RTS map hacks, closed-source game extension, and mobile game security."
+    },
+    "rea": {
+      "path": "${COLLECTIONS_DIR}/rea",
+      "description": "morluto/rea source checkout. docs/ holds the provider and platform guides. Read ONE specific guide when a REA provider or platform workflow needs explaining. The live capability is the `rea` MCP server, not this directory."
+    }
+  },
+
+  // ---- Permission matrix ----
+  // Order is load-bearing: grants first, then denies. See omission 5.
+  // Every reference collection is READ-ONLY to the agent.
+  "permissions": [
+    { "action": "external_directory", "resource": "${COLLECTIONS_DIR}/*", "effect": "allow" },
+    { "action": "read", "resource": "${COLLECTIONS_DIR}/*", "effect": "allow" },
+    { "action": "edit", "resource": "${COLLECTIONS_DIR}/*", "effect": "deny" },
+
+    { "action": "external_directory", "resource": "${CONFIG_DIR}/gameskills/*", "effect": "allow" },
+    { "action": "read", "resource": "${CONFIG_DIR}/gameskills/*", "effect": "allow" },
+    { "action": "edit", "resource": "${CONFIG_DIR}/gameskills/*", "effect": "deny" },
+
+    { "action": "external_directory", "resource": "${CONFIG_DIR}/hackskills/*", "effect": "allow" },
+    { "action": "read", "resource": "${CONFIG_DIR}/hackskills/*", "effect": "allow" },
+    { "action": "edit", "resource": "${CONFIG_DIR}/hackskills/*", "effect": "deny" },
+
+    { "action": "external_directory", "resource": "${CONFIG_DIR}/reaskills/*", "effect": "allow" },
+    { "action": "read", "resource": "${CONFIG_DIR}/reaskills/*", "effect": "allow" },
+    { "action": "edit", "resource": "${CONFIG_DIR}/reaskills/*", "effect": "deny" }
+  ],
+
+  // ---- MCP servers: 6 active, 277 tools total ----
+  // The 34-server catalog in mcp-configs/mcp-servers.json is a MENU, not a
+  // config - nothing in it is running. See docs/mcp-servers.md.
+  //
+  // Every version is pinned. See omission 2.
+  "mcp": {
+    "servers": {
+      // 170 tools. Default provider is Ghidra headless - no GUI, no manual step.
+      // Pass an ADDRESS to REA, not a bare function name.
+      "rea": {
+        "type": "local",
+        "command": [
+          "${NODE}",
+          "${APPDATA}/npm/node_modules/rea-agents/scripts/rea.mjs",
+          "mcp"
+        ],
+        "environment": {
+          "GHIDRA_INSTALL_DIR": "${TOOLS_DIR}/ghidra_12.1.4_PUBLIC",
+          "JAVA_HOME": "${TOOLS_DIR}/jdk-21.0.12.1+1",
+          "REA_IDA_MCP_CONFIG": "${TOOLS_DIR}/rea-ida-mcp.json",
+          // Without this, REA refuses to choose a provider at all and reports
+          // "Multiple analysis providers support this target" - it counts a
+          // provider as available by registration rather than by a live bridge.
+          "REA_ANALYSIS_PROVIDER": "ghidra"
+        }
+      },
+
+      // 72 tools. Built from source; upstream omits #include <mstcpip.h> in
+      // src/network.cpp, which breaks SIO_RCVALL. Reports is_admin: false by
+      // default and has its own elevate / run_elevated tools - prefer the
+      // non-elevated path and do not trigger UAC unprompted.
+      "cheat-mcp": {
+        "type": "local",
+        "command": ["${TOOLS_DIR}/cheat-mcp/build/cheatmcp.exe"]
+      },
+
+      // 24 tools. JS signature-chain location, page observation, runtime
+      // sampling, local environment reproduction.
+      "js-reverse": {
+        "type": "local",
+        "command": [
+          "${NODE}",
+          "${APPDATA}/npm/node_modules/js-reverse-mcp/build/src/index.js"
+        ]
+      },
+
+      // 8 tools. JS hook and tool-coverage instrumentation.
+      "jshook": {
+        "type": "local",
+        "command": [
+          "${NODE}",
+          "${APPDATA}/npm/node_modules/@jshookmcp/jshook/dist/index.mjs"
+        ]
+      },
+
+      // 2 tools. Live library documentation. Prefer this over training data for
+      // framework and library questions.
+      "context7": {
+        "type": "local",
+        "command": [
+          "${NODE}",
+          "${APPDATA}/npm/node_modules/@upstash/context7-mcp/dist/index.js"
+        ]
+      },
+
+      // GPU frame capture analysis.
+      "renderdoc": {
+        "type": "local",
+        "command": ["${TOOLS_DIR}/renderdoc-mcp-bin/renderdoc-mcp-windows-x64-v0.3.0/bin/renderdoc-mcp.exe"]
+      }
+    }
+  }
+}
