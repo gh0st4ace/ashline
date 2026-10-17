@@ -39,6 +39,25 @@ cd ashline
 
 ---
 
+<!-- RECENT-CHANGES:BEGIN -->
+
+## 📌 Recent changes
+
+_6 most recent user-visible commits · full history in [CHANGELOG.md](CHANGELOG.md)_
+
+| When | Change | Commit |
+|:--|:--|:--:|
+| `2026-10-18` | cheat-mcp was unreachable - the entry existed but named no source | [`18a9d01`](https://github.com/gh0st4ace/ashline/commit/18a9d01) |
+| `2026-10-17` | hero block was visually uneven - block elements inside align=center | [`ba35f33`](https://github.com/gh0st4ace/ashline/commit/ba35f33) |
+| `2026-10-17` | redesigned README; audit found and fixed 7 real defects | [`f622b84`](https://github.com/gh0st4ace/ashline/commit/f622b84) |
+| `2026-10-17` | rename Provenance -> Ashline, and fix paths the last rename broke | [`e41d093`](https://github.com/gh0st4ace/ashline/commit/e41d093) |
+| `2026-10-17` | rename OpenCode Workbench -> Provenance | [`1b171e3`](https://github.com/gh0st4ace/ashline/commit/1b171e3) |
+| `2026-10-17` | documented the 18 GiB archive as directories when it is flat .txt files | [`642a5cc`](https://github.com/gh0st4ace/ashline/commit/642a5cc) |
+
+<!-- RECENT-CHANGES:END -->
+
+
+
 > [!IMPORTANT]
 > **This repository ships the contract, not the gigabytes.** ~24 GiB of toolchain
 > and reference collections are described down to the version, source URL,
