@@ -8,8 +8,8 @@ checks everything else.
 ## Quick start
 
 ```powershell
-git clone https://github.com/gh0st4ace/provenance
-cd provenance
+git clone https://github.com/gh0st4ace/ashline
+cd ashline
 
 .\install.ps1 -DryRun     # print the plan, change nothing
 .\install.ps1             # config only

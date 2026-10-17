@@ -79,7 +79,7 @@ $list  = @($PROFILES[$What])
 if ($IncludeUnsafe) { $list = @($list + $UNSAFE) }
 
 Write-Host ""
-Write-Host "provenance - portable toolchain export" -ForegroundColor Cyan
+Write-Host "ashline - portable toolchain export" -ForegroundColor Cyan
 Write-Host "  profile: $What    root: $ToolsDir" -ForegroundColor Gray
 
 $packed = @(); $skipped = @(); $missing = @()
@@ -112,7 +112,7 @@ if ($DryRun) {
     exit 0
 }
 
-$outFile = Join-Path $OutDir "provenance-tools-$What-$stamp.zip"
+$outFile = Join-Path $OutDir "ashline-tools-$What-$stamp.zip"
 Write-Host ""
 Say "packing to $outFile"
 
@@ -148,7 +148,7 @@ if (Test-Path $outFile) {
         "it is 1 MB and reproduces the toolchain from pinned sources."
     ) -join "`r`n"
     [System.IO.File]::WriteAllText(
-        (Join-Path $OutDir "provenance-tools-$What-$stamp-README.txt"),
+        (Join-Path $OutDir "ashline-tools-$What-$stamp-README.txt"),
         $manifestNote, (New-Object System.Text.UTF8Encoding($false)))
     Say "wrote accompanying README"
 }

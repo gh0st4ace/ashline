@@ -185,8 +185,8 @@ Full detail: [knowledge-workspaces.md](knowledge-workspaces.md).
 ## Reproduce the shell
 
 ```powershell
-git clone https://github.com/gh0st4ace/provenance
-cd provenance
+git clone https://github.com/gh0st4ace/ashline
+cd ashline
 
 .\install.ps1 -DryRun              # the plan, writes nothing
 .\install.ps1 -Profile full        # config + ECC + collections + skill links

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Installs the Provenance configuration.
+    Installs the Ashline configuration.
 
 .DESCRIPTION
     Copies config templates, agents, commands, and scripts into the OpenCode
@@ -188,7 +188,7 @@ if ($existing -and -not $Force) {
 # Stage
 # ============================================================================
 Step 'Stage'
-$stage = Join-Path $env:TEMP ("provenance-" + $stamp)
+$stage = Join-Path $env:TEMP ("ashline-" + $stamp)
 Write-Plan "stage to $stage" {
     if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
     New-Item -ItemType Directory -Force -Path $stage | Out-Null

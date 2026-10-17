@@ -1,5 +1,5 @@
 {
-  "_comment_provenance": "REFERENCE CATALOG - NOT A LIVE CONFIG. Shipped verbatim from affaan-m/ECC (MIT); see THIRD_PARTY_NOTICES.md. Its schema is Claude Code's (mcpServers + command/args), not OpenCode's (mcp.servers + array command), so it would NOT parse as an OpenCode config. Every credential is a placeholder. Nothing here is running: the live set is the 6 servers in opencode.jsonc. See docs/mcp-servers.md.",
+  "_comment_source": "REFERENCE CATALOG - NOT A LIVE CONFIG. Shipped verbatim from affaan-m/ECC (MIT); see THIRD_PARTY_NOTICES.md. Its schema is Claude Code's (mcpServers + command/args), not OpenCode's (mcp.servers + array command), so it would NOT parse as an OpenCode config. Every credential is a placeholder. Nothing here is running: the live set is the 6 servers in opencode.jsonc. See docs/mcp-servers.md.",
   "mcpServers": {
     "nexus": {
       "command": "nexus",

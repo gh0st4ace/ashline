@@ -12,7 +12,7 @@ left out entirely.** Measured on disk:
 
     D:\opencode   22.36 GiB   21.24 GiB of it other people's repos
     D:\Tools       8.32 GiB   the tools (4.67 GiB of it VM media)
-    provenance     0.95 MiB   what ships
+    ashline        0.95 MiB   what ships
 
 So the binaries are not vendored, and cannot be: GitHub's per-file limit is
 100 MB against Ghidra at 865 MiB, hashcat 371, Sysinternals 272, JDK 328, dnSpy
@@ -191,4 +191,37 @@ Recorded here so the omissions are visible rather than looking like oversights:
   `-c safe.directory=`, unlike every other updater. Harmless while it is always
   invoked with `-SkipPull`; would fail standalone under the scheduler account.
 
-[0.1.0]: https://github.com/gh0st4ace/provenance/releases/tag/v0.1.0
+[0.1.0]: https://github.com/gh0st4ace/ashline/releases/tag/v0.1.0
+
+### Naming: two corrections, in order
+
+**OpenCode Workbench -> Provenance** was wrong. It named the METHOD (evidence
+provenance) rather than the subject, and had no connection to reverse
+engineering, game security or kernel research.
+
+**Provenance -> Ashline.** An "attack path" is what all of that content
+actually traces: anti-cheat, malware, drivers, game internals. Short,
+recognisable, and it sounds like tooling rather than documentation.
+
+Both renames had the same trap. "workbench" and "provenance" are both ordinary
+English words in this repository where they are exactly right and must not be
+touched:
+
+    "offline sessions, and lab benches are in scope"      a real lab bench
+    "Signature and version provenance are"                driver provenance
+    "Provenance lives outside the data"                   feed provenance
+    "Mark every offset with its provenance"               offset provenance
+    "ships binaries without source or provenance"         supply chain
+
+So neither rename was a blind replace. Each phase replaced only exact tokens
+and PRINTED every surviving occurrence with context for judgement, and the
+survivors are 28 instances of the English word, verified one by one.
+
+Also fixed a bug the first rename introduced: replacing the token
+"opencode-workbench" globally had rewritten the generator scripts' output
+paths to a directory that did not exist. The physical folder is now renamed to
+D:\opencode\ashline, so those paths are true again - verified with Test-Path,
+not assumed.
+
+The physical directory is renamed; the GitHub repository still carries the old
+name until it is renamed in the web UI.

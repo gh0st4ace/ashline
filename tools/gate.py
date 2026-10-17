@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Release gate for provenance.
+Release gate for Ashline.
 
 Runs every check that must pass before this repository is published or updated.
 Read-only apart from regenerating the sanitized scripts.
@@ -269,7 +269,7 @@ def gate_repo_size() -> None:
 
 
 def main() -> int:
-    print("provenance release gate")
+    print("ashline release gate")
     gate_required_files()
     gate_secrets()
     gate_json()

@@ -15,7 +15,7 @@ from pathlib import Path
 
 CFG = Path(r"C:\Users\rezer\.config\opencode")
 ECC = Path(r"D:\opencode\ecc")
-OUT = Path(r"D:\opencode\provenance\config\ecc-surface.json")
+OUT = Path(r"D:\opencode\ashline\config\ecc-surface.json")
 
 
 def count(path: Path, pattern: str = "*") -> int:

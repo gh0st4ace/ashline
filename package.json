@@ -1,5 +1,5 @@
 {
-  "name": "provenance",
+  "name": "ashline",
   "version": "0.1.0",
   "description": "One hardened OpenCode setup for security research, reverse engineering, and game internals - with the evidence discipline and health checks written down.",
   "keywords": [
@@ -12,14 +12,14 @@
     "windows"
   ],
   "license": "MIT",
-  "author": "provenance contributors",
-  "homepage": "https://github.com/gh0st4ace/provenance#readme",
+  "author": "ashline contributors",
+  "homepage": "https://github.com/gh0st4ace/ashline#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gh0st4ace/provenance.git"
+    "url": "https://github.com/gh0st4ace/ashline.git"
   },
   "bugs": {
-    "url": "https://github.com/gh0st4ace/provenance/issues"
+    "url": "https://github.com/gh0st4ace/ashline/issues"
   },
   "engines": {
     "node": ">=20"

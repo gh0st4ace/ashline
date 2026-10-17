@@ -63,7 +63,7 @@ $PKGS = @(
 )
 
 Write-Host ""
-Write-Host "provenance - MCP server installation" -ForegroundColor Cyan
+Write-Host "ashline - MCP server installation" -ForegroundColor Cyan
 
 # ============================================================================
 Step 'Preflight'

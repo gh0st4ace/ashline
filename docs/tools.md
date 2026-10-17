@@ -15,7 +15,7 @@ scanned from disk, not hand-maintained. Regenerate with
 | --- | --- |
 | **GitHub's limit** | 100 MB per file. Ghidra is 865 MiB, hashcat 371 MiB, Sysinternals 272 MiB, JDK 328 MiB, dnSpy 203 MiB. Not close. |
 | **License** | IDA Pro is commercial. The Windows SDK and Sysinternals are under EULA. Redistributing a vendor's binary is repackaging, not sharing. |
-| **Provenance** | Most of it is a vendor's distributed build, not your source. Committing it adds nothing the vendor's release page does not already provide. |
+| **Ashline** | Most of it is a vendor's distributed build, not your source. Committing it adds nothing the vendor's release page does not already provide. |
 | **Staleness** | A committed binary never updates. The pinned installer always can. |
 
 What ships instead is the **contract**: every tool, its role, source, license,

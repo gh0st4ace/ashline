@@ -31,7 +31,7 @@ from pathlib import Path
 
 TOOLS = Path(r"D:\Tools")
 COLL = Path(r"D:\opencode")
-OUT = Path(r"D:\opencode\provenance\config\tool-manifest.json")
+OUT = Path(r"D:\opencode\ashline\config\tool-manifest.json")
 
 # name -> (install dir, what provides it, source, license, required by)
 # "source" is the canonical download the installer uses, not an invite to

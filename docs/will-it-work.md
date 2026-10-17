@@ -12,8 +12,8 @@ cloning it, seeing a broken harness, and concluding the whole thing is vapor.
 ## What works from a fresh clone
 
 ```powershell
-git clone https://github.com/gh0st4ace/provenance
-cd provenance
+git clone https://github.com/gh0st4ace/ashline
+cd ashline
 .\install.ps1 -Profile full
 ```
 
