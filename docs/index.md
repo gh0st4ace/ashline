@@ -69,4 +69,6 @@ repo declares as dependencies rather than vendoring.
 | Adopt the discipline | [methodology](/methodology) |
 | Pick a skill | [skills catalog](/skills-catalog) |
 | Fix something broken | [troubleshooting](/troubleshooting) |
+| See the whole shell at once | [working shell](/working-shell) |
+| Understand the tools | [tools](/tools) |
 | Review it for attack surface | [agentic security](/agentic-security) |

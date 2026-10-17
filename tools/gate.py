@@ -189,6 +189,42 @@ def gate_links() -> None:
            f"({len(site_routes)} site routes verified against real docs)")
 
 
+def gate_powershell_runtime() -> None:
+    section("PowerShell runtime smoke (sigils, undefined names)")
+    # A script can PARSE and still fail at runtime. The recurring shape here:
+    # `PROFILES = @{...}` instead of `$PROFILES = @{...}`. PowerShell parses
+    # that as a command invocation and fails only when the line executes, so a
+    # parse-only gate waves it through - and `verify-setup.ps1` only notices on
+    # the one code path that touches it.
+    #
+    # Run every script with -DryRun (or -? where supported) in a child process
+    # and treat any non-zero exit or a CommandNotFoundException as a failure.
+    # Nothing is installed: every one of these supports a preview mode.
+    scripts = sorted((ROOT / "scripts").glob("*.ps1"))
+    failures = []
+    for s in scripts:
+        if s.name in {"fix-ida-shadow.ps1", "fix-ghost-sessions.ps1"}:
+            continue  # these take real action by design; not safe to smoke-test
+        args = ["powershell", "-NoProfile", "-NonInteractive",
+                "-ExecutionPolicy", "Bypass", "-File", str(s), "-DryRun"]
+        try:
+            r = subprocess.run(args, capture_output=True, text=True, timeout=90)
+        except subprocess.TimeoutExpired:
+            failures.append(f"{s.name}: timed out under -DryRun")
+            continue
+        blob = (r.stdout or "") + (r.stderr or "")
+        if "CommandNotFoundException" in blob or "CommandNotFound" in blob:
+            first = next((ln for ln in blob.splitlines()
+                          if "CommandNotFound" in ln), "")
+            failures.append(f"{s.name}: CommandNotFoundException - "
+                            f"likely a sigil-less variable. {first.strip()[:90]}")
+    if failures:
+        for f in failures:
+            bad(f)
+    else:
+        ok(f"all {len(scripts) - 2} preview-capable .ps1 run clean under -DryRun")
+
+
 def gate_required_files() -> None:
     section("required files")
     required = [
@@ -197,6 +233,8 @@ def gate_required_files() -> None:
         "CHANGELOG.md", "install.ps1", "package.json", "collections.lock.json",
         ".gitignore", "docs/index.md", "docs/methodology.md",
         "config/opencode.jsonc.template", "config/opencode-mem.jsonc.template",
+        "config/tool-manifest.json", "config/ecc-surface.json",
+        "scripts/install-all-tools.ps1", "scripts/export-portable-bundle.ps1",
     ]
     missing = [r for r in required if not (ROOT / r).exists()]
     if missing:
@@ -230,6 +268,7 @@ def main() -> int:
     gate_powershell()
     gate_python()
     gate_powershell_encoding()
+    gate_powershell_runtime()
     gate_links()
     gate_repo_size()
 

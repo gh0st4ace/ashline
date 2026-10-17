@@ -42,6 +42,9 @@
     "sanitize": "py -3 tools/sanitize-and-copy.py && py -3 tools/neutralize-assets.py && py -3 tools/fix-ps1-encoding.py",
     "rebuild": "npm run sanitize && npm run gate",
     "gate": "py -3 tools/gate.py",
+    "tools:install": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-all-tools.ps1 -What toolchain",
+    "tools:manifest": "py -3 tools/gen-tool-manifest.py",
+    "bundle:export": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/export-portable-bundle.ps1 -What triage",
     "ecc:manifest": "py -3 tools/gen-ecc-manifest.py"
   },
   "files": [

@@ -85,6 +85,7 @@ py -3 .\scripts\doctor.py      # runtime health, exits 0 / 1 / 2
 | **Maintenance scripts** | 20 | Installers, health checks, updaters, VM discipline | [docs/scripts.md](docs/scripts.md) |
 | **Knowledge workspaces** | 2 | `game-lab` (50-game registry), `kernel-sec` (702-driver feed) | [docs/knowledge-workspaces.md](docs/knowledge-workspaces.md) |
 | **Analysis engines** | 3 | Ghidra headless, IDA attached, WinDbg | [docs/installation.md](#analysis-engines) |
+| **Tools** | 32 · 2.99 GiB | Manifested, installed by script, never vendored | [docs/tools.md](docs/tools.md) |
 
 ### Skill roots
 
@@ -203,6 +204,8 @@ you derived yesterday.
 | [Collections](docs/collections.md) | Understanding dependencies. 7 collections, pinned. |
 | [Knowledge workspaces](docs/knowledge-workspaces.md) | Extending `game-lab` or `kernel-sec`. |
 | [Agentic security](docs/agentic-security.md) | Reviewing your own agent setup for attack surface. |
+| [Tools](docs/tools.md) | The 32-tool toolchain: versions, sources, licensing, provisioning. |
+| [The working shell](docs/working-shell.md) | One page describing the entire environment. |
 | [Troubleshooting](docs/troubleshooting.md) | Something broke. The measured failure modes. |
 
 ## Contributing

@@ -1,0 +1,459 @@
+{
+  "_comment": [
+    "Complete inventory of the installed toolchain, scanned from disk.",
+    "Binaries are NOT vendored: sizes, licenses, and GitHub's 100 MB",
+    "per-file limit make it impossible, and repackaging a vendor's",
+    "distributed binary is not sharing. What is vendored is this",
+    "contract: every tool, version, source, license, installer script,",
+    "and the skills that depend on it.",
+    "",
+    "Provision with scripts/install-all-tools.ps1, or per-script.",
+    "Verify with scripts/verify-setup.ps1."
+  ],
+  "generated_at": "2026-10-17",
+  "toolchain_root": "D:/Tools",
+  "totals": {
+    "tools_catalogued": 32,
+    "present": 32,
+    "absent": 0,
+    "size_gib": 2.99
+  },
+  "tools": [
+    {
+      "name": "Cpp2IL",
+      "path": "D:/Tools/Cpp2IL",
+      "present": true,
+      "size_mib": 21.9,
+      "role": "Alternative IL2CPP to managed-code converter.",
+      "source": "https://github.com/SamboyCoding/Cpp2IL/releases",
+      "license": "MIT",
+      "installer": "scripts/install-game-tools.ps1",
+      "needed_by": "rev-u3d-dump, il2cpp-reverse-engineering",
+      "vendoring": "install via script - 22 MiB"
+    },
+    {
+      "name": "Il2CppDumper",
+      "path": "D:/Tools/Il2CppDumper",
+      "present": true,
+      "size_mib": 24.6,
+      "role": "Unity IL2CPP metadata and symbol dumping.",
+      "source": "https://github.com/Perfare/Il2CppDumper/releases",
+      "license": "Unlicense",
+      "installer": "scripts/install-game-tools.ps1",
+      "needed_by": "rev-u3d-dump, game-engine-detection",
+      "vendoring": "install via script - 25 MiB"
+    },
+    {
+      "name": "ReClass.NET",
+      "path": "D:/Tools/ReClass.NET",
+      "present": true,
+      "size_mib": 9.4,
+      "role": "Class and struct reconstruction GUI.",
+      "source": "https://github.com/ReClassNET/ReClass.NET/releases",
+      "license": "Unlicense",
+      "installer": "manual",
+      "needed_by": "rev-struct",
+      "vendoring": "install via script - 9.4 MiB"
+    },
+    {
+      "name": "SysinternalsSuite",
+      "path": "D:/Tools/SysinternalsSuite",
+      "present": true,
+      "size_mib": 271.6,
+      "role": "164 executables: process, driver, and system inspection.",
+      "source": "https://learn.microsoft.com/sysinternals/downloads",
+      "license": "Microsoft EULA, free redistribution",
+      "installer": "scripts/install-missing-tools2.ps1, shims in pass 3",
+      "needed_by": "windows-driver-security, kernel-sec",
+      "vendoring": "NOT VENDORABLE - 272 MiB"
+    },
+    {
+      "name": "TitanHide",
+      "path": "D:/Tools/TitanHide",
+      "present": true,
+      "size_mib": 34.2,
+      "role": "Windows kernel driver that hides a debugger. x64dbg plugins included.",
+      "source": "https://github.com/68110357/Anti-Debug",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "anti-debugging-techniques",
+      "vendoring": "NOT VENDORABLE - offensive tooling"
+    },
+    {
+      "name": "capa",
+      "path": "D:/Tools/capa",
+      "present": true,
+      "size_mib": 35.8,
+      "role": "Capability mapping with ATT&CK IDs. Run FIRST on any unfamiliar binary.",
+      "source": "https://github.com/mandiant/capa/releases",
+      "license": "Apache-2.0",
+      "installer": "scripts/install-triage-tools.ps1",
+      "needed_by": "code-obfuscation-deobfuscation, reverse-engineering",
+      "vendoring": "install via script - 36 MiB"
+    },
+    {
+      "name": "cheat-mcp",
+      "path": "D:/Tools/cheat-mcp",
+      "present": true,
+      "size_mib": 6.7,
+      "role": "72-tool MCP: process/module enum, memory read/write/scan, pointer chains, DLL injection, IAT hooking, anti-cheat detection, network capture.",
+      "source": "built from source; upstream omits #include <mstcpip.h> in src/network.cpp which breaks SIO_RCVALL - that include is a LOCAL patch",
+      "license": "check upstream",
+      "installer": "manual build",
+      "needed_by": "rea? no - game-memory-lab, game-hacking, graphics-api",
+      "vendoring": "NOT VENDORABLE - third-party source plus local patch"
+    },
+    {
+      "name": "de4dot",
+      "path": "D:/Tools/de4dot",
+      "present": true,
+      "size_mib": 0.0,
+      "role": ".NET deobfuscator and IL post-processor.",
+      "source": "https://github.com/de4dot/de4dot/releases",
+      "license": "GPL-3.0",
+      "installer": "scripts/install-missing-tools2.ps1 (pass 2)",
+      "needed_by": "code-obfuscation-deobfuscation, dotnet-reverse",
+      "vendoring": "small - review license before shipping"
+    },
+    {
+      "name": "die",
+      "path": "D:/Tools/die",
+      "present": true,
+      "size_mib": 53.3,
+      "role": "Detect It Easy: packer and protector identification.",
+      "source": "https://github.com/horsicq/Detect-It-Easy/releases (live API, unpinned)",
+      "license": "MIT",
+      "installer": "scripts/install-triage-tools.ps1",
+      "needed_by": "binary-protection-bypass, code-obfuscation-deobfuscation",
+      "vendoring": "install via script - 53 MiB"
+    },
+    {
+      "name": "dnSpy",
+      "path": "D:/Tools/dnSpy",
+      "present": true,
+      "size_mib": 203.0,
+      "role": ".NET decompiler. dnSpy.Console for headless use.",
+      "source": "https://github.com/dnSpyEx/dnSpy/releases",
+      "license": "GPL-3.0 (dnSpyEx fork)",
+      "installer": "manual (shims reasserted by pass 3)",
+      "needed_by": "dotnet-reverse, game-engine",
+      "vendoring": "NOT VENDORABLE - 203 MiB"
+    },
+    {
+      "name": "ffuf",
+      "path": "D:/Tools/ffuf",
+      "present": true,
+      "size_mib": 10.5,
+      "role": "Fuzzing and content discovery.",
+      "source": "https://github.com/ffuf/ffuf (v2.3.0 pinned)",
+      "license": "MIT",
+      "installer": "pass 2, corrected by pass 3",
+      "needed_by": "src-hunter, fuzzing",
+      "vendoring": "install via script"
+    },
+    {
+      "name": "ghidra-mcp",
+      "path": "D:/Tools/ghidra-mcp",
+      "present": true,
+      "size_mib": 0.8,
+      "role": "MCP server wrapping Ghidra. REJECTED as a duplicate: REA already supplies 170 tools including a Ghidra provider, and the extension name collides with the local fork.",
+      "source": "https://github.com/LaurieWired/GhidraMCP",
+      "license": "check upstream",
+      "installer": "REJECTED - do not install",
+      "needed_by": "nothing - see docs/knowledge-workspaces.md",
+      "vendoring": "not shipped - rejected duplicate"
+    },
+    {
+      "name": "ghidra_12.1.4_PUBLIC",
+      "path": "D:/Tools/ghidra_12.1.4_PUBLIC",
+      "present": true,
+      "size_mib": 864.6,
+      "role": "Native decompilation. Default REA provider, headless.",
+      "source": "https://github.com/NationalSecurityAgency/ghidra/releases",
+      "license": "Apache-2.0 (NSA public release)",
+      "installer": "manual - not installed by any script here",
+      "needed_by": "rea (default provider), docs/architecture.md",
+      "vendoring": "NOT VENDORABLE - 865 MiB"
+    },
+    {
+      "name": "gobuster",
+      "path": "D:/Tools/gobuster",
+      "present": true,
+      "size_mib": 9.5,
+      "role": "Directory and DNS enumeration.",
+      "source": "https://github.com/OJ/gobuster (v3.8.2 pinned)",
+      "license": "MIT",
+      "installer": "pass 2, corrected by pass 3",
+      "needed_by": "src-hunter",
+      "vendoring": "install via script"
+    },
+    {
+      "name": "hashcat-7.1.2",
+      "path": "D:/Tools/hashcat-7.1.2",
+      "present": true,
+      "size_mib": 371.3,
+      "role": "GPU password cracking. Replaces John the Ripper, which has no official Windows build.",
+      "source": "https://hashcat.net/hashcat/",
+      "license": "MIT-ish, check upstream",
+      "installer": "scripts/install-missing-tools.ps1 (pass 1)",
+      "needed_by": "hash-attack-techniques, rsa-attack-techniques",
+      "vendoring": "NOT VENDORABLE - 371 MiB"
+    },
+    {
+      "name": "httpx",
+      "path": "D:/Tools/httpx",
+      "present": true,
+      "size_mib": 51.8,
+      "role": "HTTP prober.",
+      "source": "https://github.com/projectdiscovery/httpx (v1.12.0 pinned)",
+      "license": "MIT",
+      "installer": "pass 2, corrected by pass 3",
+      "needed_by": "web recon playbooks",
+      "vendoring": "install via script - NOTE: filename match once captured the wrong binary"
+    },
+    {
+      "name": "ida-pro-mcp-venv",
+      "path": "D:/Tools/ida-pro-mcp-venv",
+      "present": true,
+      "size_mib": 69.4,
+      "role": "Python venv for the ida-pro-mcp 1.4.0 bridge REA's attached provider uses.",
+      "source": "https://github.com/mrexodia/ida-pro-mcp",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "rea (attached provider), start-ida-mcp.ps1",
+      "vendoring": "regenerable - pip install into a venv"
+    },
+    {
+      "name": "jdk-21.0.12.1+1",
+      "path": "D:/Tools/jdk-21.0.12.1+1",
+      "present": true,
+      "size_mib": 327.9,
+      "role": "Java runtime. Ghidra cannot start without it.",
+      "source": "https://adoptium.net/temurin/releases/",
+      "license": "Eclipse Temurin (GPL-2.0 with Classpath Exception)",
+      "installer": "manual",
+      "needed_by": "ghidra",
+      "vendoring": "NOT VENDORABLE - 328 MiB"
+    },
+    {
+      "name": "kdmapper",
+      "path": "D:/Tools/kdmapper",
+      "present": true,
+      "size_mib": 2.9,
+      "role": "Kernel driver mapper. Analysis reference only - never run on the host.",
+      "source": "https://github.com/kdmapper/kdmapper",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "windows-kernel-security",
+      "vendoring": "NOT VENDORABLE - offensive kernel tooling"
+    },
+    {
+      "name": "lib",
+      "path": "D:/Tools/lib",
+      "present": true,
+      "size_mib": 18.5,
+      "role": "Shared libraries.",
+      "source": "various",
+      "license": "various",
+      "installer": "various",
+      "needed_by": "various",
+      "vendoring": "review before shipping"
+    },
+    {
+      "name": "luau",
+      "path": "D:/Tools/luau",
+      "present": true,
+      "size_mib": 7.1,
+      "role": "Luau runtime and CLI.",
+      "source": "https://github.com/luau-lang/luau",
+      "license": "MIT",
+      "installer": "manual",
+      "needed_by": "luau-roblox-reverse",
+      "vendoring": "install via script - 7.1 MiB"
+    },
+    {
+      "name": "luau-decompiler",
+      "path": "D:/Tools/luau-decompiler",
+      "present": true,
+      "size_mib": 231.0,
+      "role": "Extended Luau decompilation set.",
+      "source": "manual",
+      "license": "unknown - verify before redistribution",
+      "installer": "manual",
+      "needed_by": "luau-roblox-reverse",
+      "vendoring": "NOT VENDORABLE - license unverified"
+    },
+    {
+      "name": "nuclei",
+      "path": "D:/Tools/nuclei",
+      "present": true,
+      "size_mib": 138.7,
+      "role": "Template-driven scanner.",
+      "source": "https://github.com/projectdiscovery/nuclei",
+      "license": "MIT",
+      "installer": "pass 2, corrected by pass 3 (v3.11.1 pinned)",
+      "needed_by": "src-hunter, web attack playbooks",
+      "vendoring": "install via script"
+    },
+    {
+      "name": "nuget",
+      "path": "D:/Tools/nuget",
+      "present": true,
+      "size_mib": 1.2,
+      "role": "dnlib + AsmResolver assemblies built for netstandard2.0/net6/net8/net9.",
+      "source": "built locally via dotnet build",
+      "license": "MIT / MIT",
+      "installer": "scripts/install-game-tools.ps1",
+      "needed_by": "dotnet-reverse, game-modding-lab",
+      "vendoring": "regenerable - dotnet build, 1.2 MiB"
+    },
+    {
+      "name": "pdbfetch",
+      "path": "D:/Tools/pdbfetch",
+      "present": true,
+      "size_mib": 0.2,
+      "role": "Symbol and PDB field lookup against public symbol servers.",
+      "source": "https://github.com/winsiderss/pdbfetch",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "rev-symbol, crash triage",
+      "vendoring": "small - review license before shipping"
+    },
+    {
+      "name": "radare2-6.2.4-w64",
+      "path": "D:/Tools/radare2-6.2.4-w64",
+      "present": true,
+      "size_mib": 40.8,
+      "role": "CLI disassembly: r2, rabin2, radiff2.",
+      "source": "https://github.com/radareorg/radare2/releases",
+      "license": "LGPL-3.0",
+      "installer": "scripts/install-missing-tools.ps1 (pass 1)",
+      "needed_by": "radare2, rev-struct, binary-diff, rev-symbol",
+      "vendoring": "install via script - 41 MiB"
+    },
+    {
+      "name": "renderdoc-mcp",
+      "path": "D:/Tools/renderdoc-mcp",
+      "present": true,
+      "size_mib": 18.3,
+      "role": "RenderDoc MCP server binary.",
+      "source": "prebuilt Windows release",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "renderdoc-mcp skill",
+      "vendoring": "install via script - 18 MiB"
+    },
+    {
+      "name": "renderdoc-mcp-bin",
+      "path": "D:/Tools/renderdoc-mcp-bin",
+      "present": true,
+      "size_mib": 80.0,
+      "role": "RenderDoc MCP prebuilt distribution.",
+      "source": "prebuilt Windows release",
+      "license": "check upstream",
+      "installer": "manual",
+      "needed_by": "renderdoc-mcp skill",
+      "vendoring": "install via script - 80 MiB"
+    },
+    {
+      "name": "reverify",
+      "path": "D:/Tools/reverify",
+      "present": true,
+      "size_mib": 2.6,
+      "role": "Re-verification helper.",
+      "source": "manual",
+      "license": "unknown",
+      "installer": "manual",
+      "needed_by": "workflow scripts",
+      "vendoring": "small, review before shipping"
+    },
+    {
+      "name": "unluau",
+      "path": "D:/Tools/unluau",
+      "present": true,
+      "size_mib": 73.7,
+      "role": "Luau bytecode decompiler.",
+      "source": "https://github.com/Roblox/unluau",
+      "license": "MIT",
+      "installer": "manual",
+      "needed_by": "luau-roblox-reverse",
+      "vendoring": "NOT VENDORABLE - 74 MiB"
+    },
+    {
+      "name": "upx",
+      "path": "D:/Tools/upx",
+      "present": true,
+      "size_mib": 0.8,
+      "role": "Executable packing and unpacking.",
+      "source": "https://github.com/upx/upx/releases (v5.2.1 pinned)",
+      "license": "GPL-2.0",
+      "installer": "scripts/install-missing-tools2.ps1, corrected by pass 3",
+      "needed_by": "unpacking tasks",
+      "vendoring": "install via script - 0.8 MiB"
+    },
+    {
+      "name": "x64dbg",
+      "path": "D:/Tools/x64dbg",
+      "present": true,
+      "size_mib": 80.9,
+      "role": "User-mode debugger. Scylla bundled in its snapshot.",
+      "source": "https://github.com/x64dbg/x64dbg/releases",
+      "license": "GPL-2.0",
+      "installer": "manual",
+      "needed_by": "dynamic-debugging-triaging, game-memory-lab",
+      "vendoring": "NOT VENDORABLE - 81 MiB"
+    }
+  ],
+  "not_tools": {
+    "iso": "VM test media. 4.67 GiB. Not redistributable."
+  },
+  "undescribed_on_disk": [],
+  "loose_files": [
+    {
+      "name": "ghidra_12.1.4_PUBLIC_20260921.zip",
+      "size_mib": 543.26
+    },
+    {
+      "name": "OpenJDK21U-jdk_x64_windows.zip",
+      "size_mib": 195.57
+    },
+    {
+      "name": "interactsh-client.exe",
+      "size_mib": 26.51
+    },
+    {
+      "name": "apktool.jar",
+      "size_mib": 14.76
+    },
+    {
+      "name": "README.md",
+      "size_mib": 0.05
+    },
+    {
+      "name": "LICENSE.md",
+      "size_mib": 0.0
+    },
+    {
+      "name": "rea-ida-mcp.json",
+      "size_mib": 0.0
+    },
+    {
+      "name": "ffuf.exe",
+      "size_mib": 0.0
+    }
+  ],
+  "loose_file_count": 8,
+  "policy": {
+    "never_vendor": [
+      "Anything over ~40 MiB",
+      "Anything under a commercial or EULA license (IDA Pro, Windows SDK)",
+      "Anything derived from someone else's git clone",
+      "Virtual machine media"
+    ],
+    "always_vendor": [
+      "Every script that installs, updates, or verifies a tool",
+      "The manifest describing what is expected",
+      "Self-built lab targets (game-lab/bench) - these are yours"
+    ]
+  }
+}
