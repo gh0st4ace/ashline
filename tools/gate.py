@@ -39,8 +39,14 @@ def section(title: str) -> None:
 def gate_secrets() -> None:
     section("secrets and identity")
     # Patterns that must never appear in a public repository.
+    # Do NOT add a negative lookahead for the operator's name here. An earlier
+    # revision had `(?!rezer\b)` to avoid self-flagging, which meant the gate
+    # could never catch `C:\Users\<operator>\...` in a shipped file - a
+    # false-green on exactly the leak it exists to prevent. The `tools/`
+    # exclusion below is the correct mechanism: the generators must contain the
+    # literals they search for, and they are the only place that is true.
     patterns = {
-        "absolute user path": r"[Cc]:[\\/]+Users[\\/]+(?!rezer\b)[A-Za-z0-9_.-]+",
+        "absolute user path": r"[Cc]:[\\/]+Users[\\/]+[A-Za-z0-9_.-]+",
         "hardcoded password field": r'"password"\s*:\s*"[A-Za-z0-9_\-]{16,}"',
         "aws key": r"AKIA[0-9A-Z]{16}",
         "github token": r"gh[pousr]_[A-Za-z0-9]{20,}",
