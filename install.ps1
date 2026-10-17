@@ -306,6 +306,30 @@ if ($Profile -eq 'full') {
 }
 
 # ============================================================================
+# MCP servers
+# ============================================================================
+# Without this the config names six servers and none of them exist. OpenCode
+# starts normally and 277 tools are simply absent, which reads as a broken
+# harness rather than a missing dependency. This was a real gap.
+if ($Profile -in @('tools', 'full')) {
+    Step 'MCP servers (277 tools)'
+    $mcpScript = Join-Path $ConfigDir 'scripts\install-mcp-servers.ps1'
+    if (Test-Path $mcpScript) {
+        Write-Plan 'scripts\install-mcp-servers.ps1' {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $mcpScript
+        }
+        Say 'rea-agents js-reverse-mcp @jshookmcp/jshook @upstash/context7-mcp'
+        Say 'cheat-mcp needs a local build - the script prints the recipe'
+    } else {
+        Warn 'scripts\install-mcp-servers.ps1 not installed'
+    }
+} else {
+    Step 'MCP servers'
+    Say "skipped (-Profile $Profile). All 6 servers will be MISSING."
+    Say 'Run install.ps1 -Profile tools (or full), then scripts\install-mcp-servers.ps1'
+}
+
+# ============================================================================
 # ECC surface
 # ============================================================================
 # The bulk of the running catalog - 315 skills, 103 commands, 9 custom tools,

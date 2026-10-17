@@ -78,7 +78,10 @@ py -3 .\scripts\doctor.py      # здоровье рантайма, коды 0 /
 | Компонент | Кол-во | Что это | Где |
 | --- | ---: | --- | --- |
 | **Skills** | 174 в 5 корнях | Маршрутизация по протоколу, а не по ключевому слову | [docs/skills-catalog.md](docs/skills-catalog.md) |
-| **Коллекции-ссылки** | 7 | Ищутся, но не грузятся целиком | [docs/collections.md](docs/collections.md) |
+| **Коллекции-ссылки** | 7 · 21,2 ГиБ | Ищутся, но не грузятся целиком | [docs/collections.md](docs/collections.md) |
+| └ game-security-archive | **18,19 ГиБ** | 4086 первоисточников всех индексированных проектов. Тя��ется **тарболом, не git** - lazy-blob зависает на таком объёме. Атомарная подмена каталога, кэш на 7 дней | [docs/collections.md](docs/collections.md#the-manifest) |
+| └ wesome-game-security | 3,05 ГиБ | ~40 871 сводка проектов, 4105 wiki-страниц, 13 доменных скилов. Blobless sparse partial clone | то же |
+| └ ещё 5 | 0,12 ГиБ | hack-skills, cyber-skills, game-hacking-refs, hacking-online-games, rea | то же |
 | **Живых MCP-инструментов** | 277 | 6 серверов; один REA даёт 170 | [docs/mcp-servers.md](docs/mcp-servers.md) |
 | **Агенты** | 4 авторских | Доменные специалисты, не универсалы | [docs/agents.md](docs/agents.md) |
 | **Слэш-команды** | 6 | Операционные, не декоративные | [docs/scripts.md](docs/scripts.md) |

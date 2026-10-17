@@ -235,6 +235,8 @@ def gate_required_files() -> None:
         "config/opencode.jsonc.template", "config/opencode-mem.jsonc.template",
         "config/tool-manifest.json", "config/ecc-surface.json",
         "scripts/install-all-tools.ps1", "scripts/export-portable-bundle.ps1",
+        "scripts/install-mcp-servers.ps1", "docs/will-it-work.md",
+        "docs/working-shell.md", "docs/tools.md",
     ]
     missing = [r for r in required if not (ROOT / r).exists()]
     if missing:

@@ -17,6 +17,77 @@ So: pinned commit, declared license, fetched by script.
 
 ---
 
+## The 18 GiB archive
+
+**The single largest object in this environment, and the one most likely to be
+forgotten about.** It deserves its own section.
+
+| Property | Value |
+| --- | --- |
+| Path | `D:/opencode/awesome-game-security-archive` |
+| Size | **18.19 GiB** — 74% of everything under `D:\opencode` |
+| Contents | `archive/<owner>/<repo>/` — 4,086 primary-source mirrors |
+| Upstream | [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security), same commit as the index |
+| License | MIT |
+| Fetch | `scripts/update-awgs-archive.ps1` |
+| Updater | `update-awgs-archive.ps1`, `-MaxAgeDays 7`, `-Force` to bypass |
+
+### Why it is a tarball and not a git clone
+
+This is the whole reason it is a separate object with its own script.
+
+> Git lazy-blob fetching at 18 GiB **stalls**.
+
+A partial or blobless clone does not help — the archive tree itself is the
+bulk, so it has to be fetched. The script downloads the GitHub source tarball
+instead.
+
+### Its flags exist because of specific failures
+
+| Flag / behaviour | Why |
+| --- | --- |
+| `--retry 20 --retry-delay 10` | The transfer is long enough that a single blip used to abort it |
+| `--connect-timeout 60` | A hung connection otherwise waits forever |
+| `--speed-limit 20000 --speed-time 120` | Abort if throughput drops below ~20 KB/s for 120 s. A stalled transfer looks identical to a slow one otherwise |
+| Download to `$Cache.part`, rename on success | A partial file must never be mistaken for a complete one |
+| `ArchiveDir` → `.old`, `.new` → `ArchiveDir`, delete `.old` | **Atomic swap.** The mirror is never half-written |
+| 7-day cache gate | 18 GiB is not worth re-downloading weekly |
+| Logs size and file count | The only way to notice the mirror silently became empty |
+
+### How to use it
+
+Only as a last resort, and only for one project:
+
+> A summary in `awesome-game-security` says what a project *claims*.
+> The archive holds what the project *is*.
+
+Read one `description/<owner>/<repo>/description_*.txt` first. If it settles
+the question, stop. If it genuinely cannot — the summary is wrong, the version
+differs, you need the actual source to check a claim — then target exactly one
+`archive/<owner>/<repo>/` directory.
+
+**Never glob or grep across it.** 4,086 mirrors at 18 GiB will exhaust the
+context window and produce a worse answer, not a faster one. Delegate to a
+subagent and keep only the paths and summaries you need.
+
+### It is `hidden: true`
+
+In `config/opencode.jsonc.template` this collection carries `"hidden": true`, so
+it stays out of the per-step context until you actually open it. A 18 GiB
+reference that the agent reads on every step is worse than no reference.
+
+### Reproducing it
+
+```powershell
+.\scripts\update-awgs-archive.ps1 -DryRun   # does it take the flag?
+.\scripts\update-awgs-archive.ps1           # fetch if older than 7 days
+.\scripts\update-awgs-archive.ps1 -Force    # re-download regardless of age
+```
+
+Expect hours. It is the dominant cost of `-Profile full`.
+
+---
+
 ## The manifest
 
 | Alias | Path | Size | Upstream | License | Used for |

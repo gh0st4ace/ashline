@@ -7,7 +7,7 @@
   Профиль: full + hooks. opencode.jsonc НЕ трогается.
 
   После переустановки скрипт заново применяет 2 локальные адаптации
-  (исходники лежат в $CollectionsDir\ecc-v2-shim, бэкапы — в backups/):
+  (исходники лежат в $CollectionsDir\ecc-v2-shim, бэкапы - в backups/):
     1. v2-порт плагинов (plugins/ecc-hooks.ts + plugins/index.ts).
        Апстрим ECC 2.2.3 поставляет v1-функции, которые OpenCode >= 2.x
        отклоняет ("must export a default definition"). Без порта плагины красные.
@@ -16,11 +16,11 @@
        второй инстанс падал с дублирующимся id (красный ecc-entry в TUI).
 
   Правило безопасности (выучено 2026-10-16): НИКОГДА не переименовывать и не
-  удалять файлы, на которые ссылаются {file:...} в opencode.json — недостающий
+  удалять файлы, на которые ссылаются {file:...} в opencode.json - недостающий
   файл роняет сервер с HTTP 500 на /api/config. Скрипт только ПРОВЕРЯЕТ все
   {file:} ссылки и громко предупреждает о битых, но не чинит их сам.
 
-  doctor после этого показывает WARNING drifted-managed-files: 3 — это честный
+  doctor после этого показывает WARNING drifted-managed-files: 3 - это честный
   сигнал о трёх намеренных дивергенциях (2 файла плагинов + opencode.json),
   а не поломка. install-state НЕ правится.
 .EXAMPLE
@@ -45,7 +45,14 @@ $ShimDir = "$CollectionsDir\ecc-v2-shim"
 $ConfigRoot = Join-Path $HOME '.config\opencode'
 
 if (-not (Test-Path $EccRoot)) {
-  throw "Нет $EccRoot — сначала склонируй: git clone https://github.com/affaan-m/ecc.git $EccRoot"
+  # Clone on first run. The original threw here and told the operator to do
+  # it manually, which made -Profile full fail on a fresh machine - the
+  # most likely first-run failure.
+  Write-Host "== clone affaan-m/ecc ==" -ForegroundColor Cyan
+  & git clone --filter=blob:none https://github.com/affaan-m/ecc.git $EccRoot
+  if (-not (Test-Path $EccRoot)) {
+    throw "clone failed: https://github.com/affaan-m/ecc.git -> $EccRoot"
+  }
 }
 if (-not (Test-Path $ShimDir)) {
   throw "Нет $ShimDir с v2-портом плагинов"
@@ -88,7 +95,7 @@ try {
     $null = Get-Content $jsonPath -Raw | ConvertFrom-Json -ErrorAction Stop
     Write-Host 'Удалён легаси-ключ "plugin": ["./plugins"] (JSON валиден)' -ForegroundColor Yellow
   } else {
-    Write-Host 'Легаси-ключа "plugin" нет — пропускаю' -ForegroundColor DarkGray
+    Write-Host 'Легаси-ключа "plugin" нет - пропускаю' -ForegroundColor DarkGray
   }
 
   # 3. Аудит {file:} ссылок: только проверка, никакого автофикса.
@@ -104,13 +111,13 @@ try {
     }
   }
   if ($broken.Count -gt 0) {
-    Write-Host 'БИТЫЕ ССЫЛКИ (сервер упадёт с 500 — чинить руками!):' -ForegroundColor Red
+    Write-Host 'БИТЫЕ ССЫЛКИ (сервер упадёт с 500 - чинить руками!):' -ForegroundColor Red
     $broken | ForEach-Object { Write-Host "  MISSING $_" -ForegroundColor Red }
   } else {
     Write-Host 'Все {file:} ссылки резолвятся' -ForegroundColor Green
   }
 
-  Write-Host '== doctor (WARNING drifted-managed-files: 3 — ожидаемо, это наши 3 дивергенции) ==' -ForegroundColor Cyan
+  Write-Host '== doctor (WARNING drifted-managed-files: 3 - ожидаемо, это наши 3 дивергенции) ==' -ForegroundColor Cyan
   node scripts/ecc.js doctor --target opencode
 
   Write-Host '== плагины ==' -ForegroundColor Cyan

@@ -31,7 +31,7 @@
       "license": "MIT",
       "size_gib": 18.19,
       "fetch_method": "tarball",
-      "source_url": "https://www.loldrivers.io/../github.com/gmh5225/awesome-game-security/archive/refs/heads/main.tar.gz",
+      "source_url": "https://codeload.github.com/gmh5225/awesome-game-security/tar.gz/refs/heads/main",
       "update_script": "scripts/update-awgs-archive.ps1",
       "note": "Mirrored from the GitHub tarball, not git. Git lazy-blob fetching stalls at this size. Atomic directory swap; never half-written."
     },
