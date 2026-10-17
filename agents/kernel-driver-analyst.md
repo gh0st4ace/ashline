@@ -37,10 +37,10 @@ what cannot be established and why.
 
 | Asset | Path / command |
 | ----- | -------------- |
-| LOLDrivers feed cache (702 entries, fetched 15.10.2026) | `D:\opencode\kernel-sec\knowledge\lol_drivers.json` |
-| Feed queries | `py -3 D:\opencode\kernel-sec\scripts\feed_query.py {stats\|name\|company\|cve\|id\|top} [q]` |
-| Passive triage | `py -3 D:\opencode\kernel-sec\scripts\driver_triage.py [--sig] [--json] <file.sys> ...` (hashes, PE metadata, Authenticode, LOLD hash-match) |
-| Evidence sheets incl. CVE-2021-21551 root cause | `D:\opencode\kernel-sec\knowledge\README.md` |
+| LOLDrivers feed cache (702 entries, fetched 15.10.2026) | `{COLLECTIONS}\kernel-sec\knowledge\lol_drivers.json` |
+| Feed queries | `py -3 {COLLECTIONS}\kernel-sec\scripts\feed_query.py {stats\|name\|company\|cve\|id\|top} [q]` |
+| Passive triage | `py -3 {COLLECTIONS}\kernel-sec\scripts\driver_triage.py [--sig] [--json] <file.sys> ...` (hashes, PE metadata, Authenticode, LOLD hash-match) |
+| Evidence sheets incl. CVE-2021-21551 root cause | `{COLLECTIONS}\kernel-sec\knowledge\README.md` |
 | Feed endpoint fact | https://www.loldrivers.io/api/drivers.json (site API). The repo raw path `drivers.json` DOES NOT exist (404, measured) — do not retry it |
 
 ## Procedure

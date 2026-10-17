@@ -306,6 +306,38 @@ if ($Profile -eq 'full') {
 }
 
 # ============================================================================
+# ECC surface
+# ============================================================================
+# The bulk of the running catalog - 315 skills, 103 commands, 9 custom tools,
+# plugins, hooks - comes from affaan-m/ECC (MIT) and is NOT vendored. Without
+# this step the workbench installs but the skill catalog stays empty, which is
+# the single most likely way for a fresh install to look "broken".
+if ($Profile -in @('tools', 'full')) {
+    Step 'ECC surface (affaan-m/ECC, MIT)'
+    $manifestPath = Join-Path $RepoRoot 'config\ecc-surface.json'
+    if (Test-Path $manifestPath) {
+        $m = Get-Content $manifestPath -Raw | ConvertFrom-Json
+        Say "manifest: $($m.surface.skills.count) skills, $($m.surface.commands.count) commands, $($m.surface.tools.count) tools"
+    } else {
+        Warn 'config\ecc-surface.json missing - cannot report the expected ECC surface'
+    }
+
+    $eccScript = Join-Path $ConfigDir 'scripts\update-ecc.ps1'
+    if (Test-Path $eccScript) {
+        Write-Plan 'scripts\update-ecc.ps1' {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $eccScript
+        }
+        Say 'installed via scripts\update-ecc.ps1 (pull -> build -> install-apply -> re-apply v2 shims)'
+    } else {
+        Warn 'scripts\update-ecc.ps1 not installed - clone affaan-m/ECC and run its installer manually'
+    }
+} else {
+    Step 'ECC surface'
+    Say "skipped (-Profile $Profile). The 315 skills and 103 commands will NOT be present."
+    Say 'Run install.ps1 -Profile tools (or full) to fetch them.'
+}
+
+# ============================================================================
 # Skill links
 # ============================================================================
 if ($Profile -in @('tools', 'full')) {

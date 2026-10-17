@@ -39,7 +39,10 @@
     "registry:validate": "py -3 knowledge/game-lab/scripts/game_registry.py --validate",
     "selfcheck:game-lab": "powershell -NoProfile -ExecutionPolicy Bypass -File knowledge/game-lab/selfcheck.ps1",
     "selfcheck:kernel-sec": "powershell -NoProfile -ExecutionPolicy Bypass -File knowledge/kernel-sec/selfcheck.ps1",
-    "sanitize": "py -3 tools/sanitize-and-copy.py"
+    "sanitize": "py -3 tools/sanitize-and-copy.py && py -3 tools/neutralize-assets.py && py -3 tools/fix-ps1-encoding.py",
+    "rebuild": "npm run sanitize && npm run gate",
+    "gate": "py -3 tools/gate.py",
+    "ecc:manifest": "py -3 tools/gen-ecc-manifest.py"
   },
   "files": [
     "AGENTS.md",

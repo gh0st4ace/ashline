@@ -1,0 +1,25 @@
+{
+ "run1": {
+  "base": "0x7ff636d30000",
+  "g": "0x7ff636d39000",
+  "map_rva": 36864,
+  "map_base_plus_rva_matches_hdr": true,
+  "read32_ok": false,
+  "mem_health": null,
+  "printed_final_health": 86.0,
+  "mem_health_eq_printed": null,
+  "mem_calls": null,
+  "printed_final_calls": 2,
+  "mem_calls_eq_printed": null,
+  "aob_static_matches": false
+ },
+ "run2": {
+  "base2": "0x7ff636d30000",
+  "g2": "0x7ff636d39000",
+  "rva_stable": true
+ },
+ "run3": {
+  "aob_hits": 0,
+  "aob_match_hdr": false
+ }
+}

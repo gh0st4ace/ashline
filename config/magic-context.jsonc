@@ -1,0 +1,38 @@
+{
+  // magic-context — infinite context, cross-session memory, background history
+  // compression. Installed for @cortexkit/opencode-magic-context@0.49.0.
+  //
+  // The plan specified historian.model = "github-copilot/gpt-5.4" with
+  // fallback_models = ["opencode-go/glm-5"]. NEITHER EXISTS on this machine.
+  // tools.opencode.models() returns exactly one provider, "opencode", with 35
+  // models — there is no github-copilot provider and no opencode-go provider.
+  // The plan said to replace the historian model if unavailable, so it was
+  // replaced with opencode/glm-5.3-flash: it keeps the glm lineage the plan
+  // asked for and is flash-tier, which is the right cost profile for a
+  // background summarisation job that runs while the user is not waiting.
+  //
+  // Rollback: delete this file, remove "@cortexkit/opencode-magic-context"
+  // from the plugins array in opencode.jsonc, and restore
+  // backups/opencode.jsonc.20261014-184141.pre-magic-context.bak
+  // (which also restores compaction.auto to true).
+  "$schema": "https://raw.githubusercontent.com/cortexkit/magic-context/master/assets/magic-context.schema.json",
+  "enabled": true,
+  "historian": {
+    
+    
+    "opencode": {
+      "model": "opencode/glm-5.3-flash",
+      "fallback_models": [
+        "opencode/qwen3.8-flash",
+        "opencode/gemini-3.8-flash"
+      ]
+    },
+    "pi": {
+      "model": "opencode/glm-5.3-flash",
+      "fallback_models": [
+        "opencode/qwen3.8-flash",
+        "opencode/gemini-3.8-flash"
+      ]
+    }
+  }
+}

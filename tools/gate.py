@@ -114,17 +114,36 @@ def gate_python() -> None:
         ok(f"all {len(pys)} .py compile")
 
 
-def gate_powershell_ascii() -> None:
-    section("PowerShell ASCII (PS 5.1 reads BOM-less files as ANSI)")
-    for p in list((ROOT / "scripts").glob("*.ps1")) + [ROOT / "install.ps1"]:
-        data = p.read_bytes()
-        if data[:3] == b"\xef\xbb\xbf":
-            bad(f"{p.name} has a UTF-8 BOM; PS 5.1 and YAML frontmatter both misread that")
-        n = sum(1 for b in data if b > 127)
-        if n:
-            bad(f"{p.name}: {n} non-ASCII byte(s) - will render as mojibake under PS 5.1")
-    else:
-        ok("all .ps1 are BOM-free ASCII")
+def gate_powershell_encoding() -> None:
+    section("PowerShell encoding (PS 5.1 picks UTF-8 vs ANSI by BOM)")
+    # The rule is NOT "all .ps1 must be ASCII". Windows PowerShell 5.1 reads a
+    # BOM-less file as ANSI, so non-ASCII is mojibake without a BOM - and a
+    # mangled byte can land on a quote and break parsing outright. So:
+    #   non-ASCII present -> MUST have a UTF-8 BOM
+    #   pure ASCII        -> MUST NOT have one
+    # An earlier version of this gate asserted ASCII unconditionally and was
+    # wrong; scripts/update-ecc.ps1 has Russian throw strings and is correct.
+    bom = b"\xef\xbb\xbf"
+    for p in list((ROOT / "scripts").glob("*.ps1")) + [ROOT / "install.ps1"] \
+            + sorted(ROOT.glob("knowledge/*/selfcheck.ps1")):
+        raw = p.read_bytes()
+        has_bom = raw.startswith(bom)
+        body = raw[len(bom):] if has_bom else raw
+        non_ascii = any(b > 127 for b in body)
+        rel = p.relative_to(ROOT)
+        if non_ascii and not has_bom:
+            try:
+                body.decode("utf-8")
+            except UnicodeDecodeError:
+                bad(f"{rel}: non-ASCII and no BOM - PS 5.1 reads this as ANSI; "
+                    f"bytes are not even valid UTF-8")
+            else:
+                bad(f"{rel}: non-ASCII without a UTF-8 BOM - PS 5.1 will read it "
+                    f"as ANSI and a mangled byte may break string parsing")
+        elif not non_ascii and has_bom:
+            bad(f"{rel}: pure ASCII but carries a UTF-8 BOM - unnecessary, and a "
+                f"BOM breaks YAML frontmatter in some readers")
+    ok("all .ps1 correctly encoded for PowerShell 5.1")
 
 
 def gate_links() -> None:
@@ -210,7 +229,7 @@ def main() -> int:
     gate_json()
     gate_powershell()
     gate_python()
-    gate_powershell_ascii()
+    gate_powershell_encoding()
     gate_links()
     gate_repo_size()
 

@@ -1,0 +1,13 @@
+bench_native pid-seeking via external process list.
+struct GameState size=56
+hdr_module_base=00007FF72F330000
+hdr_apply_damage=00007FF72F3313B0
+hdr_g=00007FF72F339000
+offsets: health=0x0 ammo=0x4 name=0x8 xp=0x20 calls=0x24 score=0x28
+hdr_g_aob=0000c8421900000062656e63685f77617272696f720000000000000000000000000000000000000000000000003c8f400000000000000000
+hdr_g_aob_static=1900000062656e63685f77617272696f720000000000000000000000
+tick=1 health=93.00 ammo=25 xp=10 calls=1 score=999.50
+tick=2 health=86.00 ammo=25 xp=20 calls=2 score=999.50
+final tick=2 health=86.00 calls=2
+ends
+bye

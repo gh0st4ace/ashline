@@ -194,10 +194,23 @@ def main() -> int:
         ("sync-awgs-skills.ps1", "scripts/sync-awgs-skills.ps1"),
         ("start-ida-mcp.ps1", "scripts/start-ida-mcp.ps1"),
         ("vmhelper.ps1", "scripts/vmhelper.ps1"),
+        # sourced from D:\opencode, not the config root
+        ("D:/opencode/update-ecc.ps1", "scripts/update-ecc.ps1"),
         ("devshell.cmd", "scripts/devshell.cmd"),
         ("run-awgs-update.cmd", "scripts/run-awgs-update.cmd"),
         ("run-awgs-archive.cmd", "scripts/run-awgs-archive.cmd"),
         ("the-security-guide.md", "docs/agentic-security.source.md"),
+        # --- authored content missed on the first pass ---------------------
+        ("REFERENCE-INDEX.md", "REFERENCE-INDEX.md"),
+        ("MIGRATION.md", "docs/migration-from-claude-code.md"),
+        ("cli.json", "config/cli.json"),
+        ("dcp.jsonc", "config/dcp.jsonc"),
+        ("magic-context.jsonc", "config/magic-context.jsonc"),
+        ("tui-preferences.jsonc", "config/tui-preferences.jsonc"),
+        ("index.ts", "config/plugins.index.ts"),
+        ("hooks/README.md", "config/hooks.README.md"),
+        ("hooks/memory-persistence/README.md", "config/memory-persistence.README.md"),
+        ("hooks/hooks.metadata.json", "config/hooks.metadata.json"),
         ("agents/kernel-driver-analyst.md", "agents/kernel-driver-analyst.md"),
         ("agents/ksec-validator.md", "agents/ksec-validator.md"),
         ("agents/gamesec.md", "agents/gamesec.md"),
@@ -206,7 +219,8 @@ def main() -> int:
 
     copied = 0
     for rel_src, rel_dst in targets:
-        s, d = SRC / rel_src, DST / rel_dst
+        s = Path(rel_src) if ":" in rel_src else (SRC / rel_src)
+        d = DST / rel_dst
         if not s.exists():
             print(f"MISSING  {rel_src}")
             continue
@@ -234,8 +248,12 @@ def main() -> int:
         elif d.suffix == ".py":
             text = do_py(text, report)
         else:
-            for a, b in [(r"C:/Users/rezer/\.config/opencode", "~/.config/opencode"),
-                         (r"C:/Users/rezer", "~"), (r"D:/opencode/", "{COLLECTIONS}/")]:
+            for a, b in [(r"C:\\Users\\rezer\\\.config\\opencode", "~/.config/opencode"),
+                         (r"C:/Users/rezer/\.config/opencode", "~/.config/opencode"),
+                         (r"C:\\Users\\rezer", "~"),
+                         (r"C:/Users/rezer", "~"),
+                         (r"D:/opencode/", "{COLLECTIONS}/"),
+                         (r"D:\\opencode\\", "{COLLECTIONS}\\")]:
                 text = re.sub(a, lambda _m, r=b: r, text)
         d.parent.mkdir(parents=True, exist_ok=True)
         d.write_bytes(text.replace("\r\n", "\n").encode("utf-8"))
@@ -257,6 +275,22 @@ def main() -> int:
             for s in SECRETS:
                 if s in t:
                     bad.append(f"{f.relative_to(DST)}  SECRET")
+    # A .ps1 containing non-ASCII must carry a UTF-8 BOM: PS 5.1 reads a
+    # BOM-less file as ANSI, and a mangled byte can terminate a string literal
+    # and turn a valid script into a parse error. See tools/fix-ps1-encoding.py.
+    fixed = 0
+    for ps1 in sorted((DST / "scripts").glob("*.ps1")):
+        raw = ps1.read_bytes()
+        bom = b"\xef\xbb\xbf"
+        has = raw.startswith(bom)
+        body = raw[len(bom):] if has else raw
+        if any(b > 127 for b in body) and not has:
+            ps1.write_bytes(bom + body)
+            print(f"  {ps1.name}: added UTF-8 BOM (contains non-ASCII)")
+            fixed += 1
+    if fixed:
+        print(f"  -> run tools/fix-ps1-encoding.py to confirm; {fixed} file(s) adjusted")
+
     print(f"\ncopied {copied}/{len(targets)}")
     if bad:
         print("GATE FAILED - residual absolute paths or secrets:")

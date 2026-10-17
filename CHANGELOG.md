@@ -35,17 +35,55 @@ documented, installable repository.
 - `config/opencode-mem.jsonc.template` — including the two settings that must
   not be reverted without re-indexing.
 
-**Scripts** (19, sanitized and parameterized)
+**Scripts** (20, sanitized and parameterized)
 
 - Health: `verify-setup.ps1` (11 check categories), `doctor.py` (8 sections,
   the only instrument returning non-zero), `maintain.ps1`.
 - Installers: `install-missing-tools.ps1` / `2` / `3`, `install-game-tools.ps1`,
   `install-triage-tools.ps1`.
 - Updaters: `update-awgs.ps1`, `update-awgs-archive.ps1`,
-  `update-hack-skills.ps1`, `sync-awgs-skills.ps1`, and two Task Scheduler
-  launchers.
+  `update-hack-skills.ps1`, `sync-awgs-skills.ps1`, `update-ecc.ps1`, and two
+  Task Scheduler launchers.
 - Fixers: `fix-ida-shadow.ps1`, `fix-ghost-sessions.ps1`.
 - Environment: `start-ida-mcp.ps1`, `vmhelper.ps1`, `devshell.cmd`.
+
+**Third-party surface made explicit**
+
+`config/ecc-surface.json` is a generated manifest of everything affaan-m/ECC
+supplies — 315 skills, 103 commands, 9 custom tools, 2 plugins, 4 hook
+definitions — pinned to a commit, with the locally authored v2 adaptations named
+separately and the deliberate exclusions listed.
+
+`install.ps1` now fetches this surface on `-Profile tools`/`full`. Without it a
+fresh install looks broken: the workbench layer is present and the skill catalog
+is empty. That is the single most likely first-run failure.
+
+Also captured on the completeness pass: `ecc-v2-shim/` (three authored files
+adapting ECC to the OpenCode v2 plugin shape), `REFERENCE-INDEX.md`,
+`docs/migration-from-claude-code.md`, the full `the-security-guide.md` source,
+the remaining config templates (`cli.json`, `dcp.jsonc`, `magic-context.jsonc`,
+`tui-preferences.jsonc`, `plugins.index.ts`, the hook sidecars), and the
+`bench/`, `reports/` and `tests/` trees of `game-lab` plus `tests/` of
+`kernel-sec`.
+
+**Encoding bug found and fixed on the completeness pass**
+
+`scripts/update-ecc.ps1` and both `selfcheck.ps1` files contain Russian text,
+and Windows PowerShell 5.1 decides a script's encoding from its BOM: no BOM
+means ANSI, so non-ASCII becomes mojibake. That is cosmetic — until a mangled
+byte lands on `"` and terminates a string literal early, which turned
+`update-ecc.ps1` into a parse error. Fixed by writing those three files as
+UTF-8 **with** BOM.
+
+The gate that caught this asserted "all `.ps1` must be ASCII", which was itself
+wrong: a non-ASCII script carrying a BOM is correct. The rule is now:
+
+| Content | Encoding |
+| --- | --- |
+| Non-ASCII present | UTF-8 **with** BOM — required |
+| Pure ASCII | no BOM — a BOM breaks YAML frontmatter |
+
+`tools/fix-ps1-encoding.py` applies it.
 
 **Knowledge workspaces**
 

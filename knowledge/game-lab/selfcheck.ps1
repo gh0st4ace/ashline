@@ -1,4 +1,4 @@
-# game-lab workspace selfcheck — data + scripts + skills + tools.
+﻿# game-lab workspace selfcheck — data + scripts + skills + tools.
 # Run before a game research session.
 $fail = 0
 function Ok($cond, $msg) {

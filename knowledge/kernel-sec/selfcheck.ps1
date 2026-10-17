@@ -1,4 +1,4 @@
-# kernel-sec workspace selfcheck — passive verification of data + scripts + tools.
+﻿# kernel-sec workspace selfcheck — passive verification of data + scripts + tools.
 # Run before any driver research session: powershell -File selfcheck.ps1
 $fail = 0
 function Ok($cond, $msg) {
