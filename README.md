@@ -2,7 +2,7 @@
 
 # ‹› Ashline ‹›
 
-### One hardened OpenCode setup for reverse engineering, game security, and driver research, create game cheats
+### One hardened OpenCode setup for reverse engineering, game security, driver research, and game cheats, Bypass Anti-Cheats
 
 **A field-tested environment you install instead of rebuilding.**
 
