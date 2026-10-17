@@ -11,7 +11,7 @@
 [![Skills](https://img.shields.io/badge/skills-174-5c4ee5?style=for-the-badge)](docs/skills-catalog.md)
 [![MCP tools](https://img.shields.io/badge/live_MCP_tools-277-3b82f6?style=for-the-badge)](docs/mcp-servers.md)
 [![Tools](https://img.shields.io/badge/tools-32-8250df?style=for-the-badge)](docs/tools.md)
-[![Collections](https://img.shields.io/badge/collections-7·21.2_GiB-d73a4a?style=for-the-badge)](docs/collections.md)
+[![Collections](https://img.shields.io/badge/collections-21.2_GiB-d73a4a?style=for-the-badge)](docs/collections.md)
 [![Scripts](https://img.shields.io/badge/scripts-23-bfd4f2?style=for-the-badge)](docs/scripts.md)
 [![Gates](https://img.shields.io/badge/release_gates-12/12-4c1_3b82f6?style=for-the-badge)](tools/gate.py)
 
