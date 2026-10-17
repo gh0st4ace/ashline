@@ -26,7 +26,7 @@ forgotten about.** It deserves its own section.
 | --- | --- |
 | Path | `D:/opencode/awesome-game-security-archive` |
 | Size | **18.19 GiB** — 74% of everything under `D:\opencode` |
-| Contents | `archive/<owner>/<repo>/` — 4,086 primary-source mirrors |
+| Contents | `<owner>/<repo>.txt` - 4,086 **flat files**, one per indexed project, each holding a source tree plus file contents |
 | Upstream | [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security), same commit as the index |
 | License | MIT |
 | Fetch | `scripts/update-awgs-archive.ps1` |
@@ -64,7 +64,7 @@ Only as a last resort, and only for one project:
 Read one `description/<owner>/<repo>/description_*.txt` first. If it settles
 the question, stop. If it genuinely cannot — the summary is wrong, the version
 differs, you need the actual source to check a claim — then target exactly one
-`archive/<owner>/<repo>/` directory.
+`<owner>/<repo>.txt` file.
 
 **Never glob or grep across it.** 4,086 mirrors at 18 GiB will exhaust the
 context window and produce a worse answer, not a faster one. Delegate to a
@@ -93,7 +93,7 @@ Expect hours. It is the dominant cost of `-Profile full`.
 | Alias | Path | Size | Upstream | License | Used for |
 | --- | --- | ---: | --- | --- | --- |
 | `awesome-game-security` | `D:/opencode/awesome-game-security` | 3.05 GiB | [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security) | see upstream | ~40,871 project summaries, 4,105 wiki pages, 13 domain skills |
-| `game-security-archive` | `D:/opencode/awesome-game-security-archive` | 18.19 GiB | same (archive tree) | see upstream | 4,086 primary-source mirrors |
+| `game-security-archive` | `D:/opencode/awesome-game-security-archive` | 18.19 GiB | same repo, archive tree | see upstream | 4,086 flat `<owner>/<repo>.txt` files |
 | `hack-skills` | `D:/opencode/hack-skills` | 0.01 GiB | [yaklang/hack-skills](https://github.com/yaklang/hack-skills) | see upstream | 103 practical security skills |
 | `cyber-skills` | `D:/opencode/cybersecurity-skills` | 0.04 GiB | [mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | see upstream | 818 skills, 291 MITRE techniques |
 | `game-hacking-refs` | `D:/opencode/game-hacking-references` | <0.01 GiB | [dsasmblr/game-hacking](https://github.com/dsasmblr/game-hacking) | MIT | Curated game-RE tutorials and tools |

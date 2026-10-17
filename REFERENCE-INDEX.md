@@ -32,7 +32,7 @@ to only the configured set leaves two thirds of the catalog untouched.
 | Alias | Path | Holds |
 | ----- | ---- | ----- |
 | `awesome-game-security` | `{COLLECTIONS}/awesome-game-security` | 40 871 project summaries, 4 105 wiki pages, 13 domain skills |
-| `game-security-archive` | `{COLLECTIONS}/awesome-game-security-archive` | 4 086 primary source mirrors, 18.2 GiB |
+| `game-security-archive` | `{COLLECTIONS}/awesome-game-security-archive` | 4 086 flat `<owner>/<repo>.txt` files, 18.2 GiB |
 | `hack-skills` | `{COLLECTIONS}/hack-skills` | 103 skills on disk, 93 in catalog |
 | `cyber-skills` | `{COLLECTIONS}/cybersecurity-skills` | 818 skills, 291 MITRE techniques |
 | `game-hacking-refs` | `{COLLECTIONS}/game-hacking-references` | game-RE tutorials |

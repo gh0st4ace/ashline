@@ -79,7 +79,7 @@ py -3 .\scripts\doctor.py      # runtime health, exits 0 / 1 / 2
 | --- | ---: | --- | --- |
 | **Skills** | 174 across 5 discovery roots | Routed by a mandatory protocol, not by keyword | [docs/skills-catalog.md](docs/skills-catalog.md) |
 | **Reference collections** | 7 · 21.2 GiB | Searchable, never loaded wholesale | [docs/collections.md](docs/collections.md) |
-| └ game-security-archive | **18.19 GiB** | 4,086 primary-source mirrors of every indexed project. Fetched as a **tarball, not git** - lazy-blob fetching stalls at this size. Atomic directory swap, 7-day cache gate | [docs/collections.md](docs/collections.md#the-manifest) |
+| └ game-security-archive | **18.19 GiB** | 4,086 flat `.txt` files - one per indexed project, holding its source tree plus file contents. Fetched as a **tarball, not git** - lazy-blob fetching stalls at this size. Atomic directory swap, 7-day cache gate | [docs/collections.md](docs/collections.md#the-manifest) |
 | └ wesome-game-security | 3.05 GiB | ~40,871 project summaries, 4,105 wiki pages, 13 domain skills. Blobless sparse partial clone | same |
 | └ 5 more | 0.12 GiB | hack-skills, cyber-skills, game-hacking-refs, hacking-online-games, rea | same |
 | **Live MCP tools** | 277 | 6 servers; REA alone supplies 170 | [docs/mcp-servers.md](docs/mcp-servers.md) |

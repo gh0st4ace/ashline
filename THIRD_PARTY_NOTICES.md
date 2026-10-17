@@ -25,7 +25,7 @@ is the authoritative record.
 | Project | Upstream | Used for | License |
 | --- | --- | --- | --- |
 | [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security) | GitHub | ~40,871 project summaries, 4,105 wiki pages, 13 domain skills | see upstream repo |
-| gmh5225/awesome-game-security (`archive/`) | GitHub tarball | 4,086 primary-source mirrors | see upstream repo |
+| gmh5225/awesome-game-security (`archive/`) | GitHub tarball | 4,086 flat `<owner>/<repo>.txt` files | see upstream repo |
 | [yaklang/hack-skills](https://github.com/yaklang/hack-skills) | GitHub | 103 practical security skills | see upstream repo |
 | [mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | GitHub | 818 skills, 291 MITRE techniques | see upstream repo |
 | [dsasmblr/game-hacking](https://github.com/dsasmblr/game-hacking) | GitHub | Curated game-RE tutorials and tools | MIT |

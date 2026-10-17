@@ -107,7 +107,7 @@
     },
     "game-security-archive": {
       "path": "${COLLECTIONS_DIR}/awesome-game-security-archive",
-      "description": "Primary source mirrors for awesome-game-security: archive/<owner>/<repo>/ holds the actual upstream project files. Consult only when a summary in awesome-game-security cannot establish what a tool actually does. ~18 GiB - target one project.",
+      "description": "Primary sources for awesome-game-security. Each indexed project is one FLAT FILE <owner>/<repo>.txt containing its source tree plus file contents - not a directory. Read ONE such file; never grep across the 18 GiB tree. Consult only when a summary in awesome-game-security cannot establish what a tool actually does. ~18 GiB - target ONE <repo>.txt - never grep across the tree.",
       "hidden": true
     },
     "hack-skills": {
