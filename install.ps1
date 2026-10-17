@@ -362,6 +362,30 @@ if ($Profile -in @('tools', 'full')) {
 }
 
 # ============================================================================
+# Submodules
+# ============================================================================
+# cheat-mcp is a submodule, not a vendored copy - its upstream carries no
+# LICENSE file, so copying it here would be redistribution without permission.
+# Without `git clone --recursive` the directory is empty and cheat-mcp looks
+# absent, which is the report that started this. So initialise it here.
+Step 'Submodules'
+if (Test-Path (Join-Path $RepoRoot '.gitmodules')) {
+    Get-Content (Join-Path $RepoRoot '.gitmodules') |
+        Where-Object { $_ -match 'path\s*=' } |
+        ForEach-Object { Say "  $($_ -replace '.*path\s*=\s*','')" }
+    Write-Plan 'git submodule update --init --recursive' {
+        Push-Location $RepoRoot
+        & git submodule update --init --recursive 2>&1 |
+            Where-Object { $_ -match 'error|fatal' } |
+            ForEach-Object { Write-Host "      $_" -ForegroundColor DarkYellow }
+        Pop-Location
+    }
+    Say 'referenced, not redistributed - see THIRD_PARTY_NOTICES.md'
+} else {
+    Say 'none declared'
+}
+
+# ============================================================================
 # Skill links
 # ============================================================================
 if ($Profile -in @('tools', 'full')) {

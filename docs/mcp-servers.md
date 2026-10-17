@@ -12,7 +12,7 @@ config, and nothing in them is running.
 | Server | Tools | Transport | Needs | Purpose |
 | --- | ---: | --- | --- | --- |
 | `rea` | 170 | local | Ghidra headless, or the IDA bridge | Reverse engineering across binaries, JS/Electron apps, .NET, Android, firmware, wasm, EVM, PCAP |
-| `cheat-mcp` | 72 | local | Built from source; elevation for most ops | Process/module enumeration, memory read/write/scan, pointer chains, DLL injection, IAT hooking, AC detection, network capture |
+| `cheat-mcp` | 72 | local | C++ — [AnonymoDGH/cheat-mcp](https://github.com/AnonymoDGH/cheat-mcp.git) @ `e1d6952`; elevation for most ops | Process/module enumeration, memory read/write/scan, pointer chains, DLL injection, IAT hooking, AC detection, network capture |
 | `js-reverse` | 24 | local | Node | JS signature-chain location, page observation, runtime sampling, local environment reproduction |
 | `jshook` | 8 | local | Node | JS hook and tool-coverage instrumentation |
 | `context7` | 2 | local | Node | Live library documentation |

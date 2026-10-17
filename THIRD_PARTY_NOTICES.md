@@ -48,7 +48,7 @@ Six are configured by this project:
 | Server | Source | Tools |
 | --- | --- | ---: |
 | [morluto/rea](https://github.com/morluto/rea) | npm `rea-agents` | 170 |
-| cheat-mcp | Built from source; local patch applied | 72 |
+| [AnonymoDGH/cheat-mcp](https://github.com/AnonymoDGH/cheat-mcp.git) @ `e1d6952` | C++ source, built locally — **no LICENSE file, all rights reserved** | 72 |
 | js-reverse-mcp | npm | 24 |
 | [@jshookmcp/jshook](https://www.npmjs.com/package/@jshookmcp/jshook) | npm | 8 |
 | [@upstash/context7-mcp](https://www.npmjs.com/package/@upstash/context7-mcp) | npm | 2 |
@@ -87,11 +87,24 @@ a local environment artifact and not reproduced here.
 
 ## Local modifications to third-party code
 
-One, documented because a clean `git pull` will conflict with it:
+**cheat-mcp** — `src/network.cpp` omits `#include <mstcpip.h>`, without which the
+build fails at the `SIO_RCVALL` `WSAIoctl` call on line 246. The fix, plus
+`_WIN32_WINNT`/`WINVER` guards, is kept as a real patch at
+[`patches/cheat-mcp-mstcpip.patch`](patches/cheat-mcp-mstcpip.patch) and applied
+by `scripts/install-mcp-servers.ps1`.
 
-**cheat-mcp** — `src/network.cpp` omits `#include <mstcpip.h>`, which breaks the
-`SIO_RCVALL` call. That include is a local fix. It is not upstream code and is
-not redistributed here.
+It is **not** an edit baked into a copy of the tree, which is why a later
+`git pull` no longer collides with it. The upstream is a submodule pinned at
+`e1d6952`.
+
+### Why a submodule and not a vendored copy
+
+The upstream repository has **no LICENSE file**. Absence of a license means all
+rights reserved, so copying the source into this repository would be
+redistribution without permission. A submodule references and pins it; it does
+not redistribute it. Same reason for `luau-decompiler`, `TitanHide` and
+`renderdoc-mcp-bin`, which are marked *NOT VENDORABLE* in
+[`config/tool-manifest.json`](config/tool-manifest.json).
 
 ---
 

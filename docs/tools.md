@@ -109,13 +109,28 @@ manual reading takes hours.
 | **Il2CppDumper** 6.7.46 | Unity IL2CPP metadata and symbols | same |
 | **Cpp2IL** | Alternative IL2CPP → managed converter | same |
 | **ReClass.NET** | Class and struct reconstruction | manual |
-| **cheat-mcp** | 72-tool MCP: memory read/write/scan, pointer chains, DLL injection, IAT hooking, AC detection | manual build |
+| **cheat-mcp** v1.1 | 72-tool MCP: memory read/write/scan, pointer chains, DLL injection, IAT hooking, AC detection. **C++ — [AnonymoDGH/cheat-mcp](https://github.com/AnonymoDGH/cheat-mcp.git) @ `e1d6952`** | `install-mcp-servers.ps1 -What all` |
 
-### cheat-mcp is built from source, and carries a local patch
+### Building cheat-mcp
 
-Upstream omits `#include <mstcpip.h>` in `src/network.cpp`, which breaks the
-`SIO_RCVALL` call. That include is **a local fix and will conflict on a fresh
-`git pull`**. Not redistributed here.
+```powershell
+.\scripts\install-mcp-servers.ps1 -What all
+```
+
+That clones the upstream, applies `patches/cheat-mcp-mstcpip.patch`, and runs
+CMake. Requires **CMake 3.16+, a C++17 compiler, Visual Studio**.
+
+The patch is not optional. Upstream omits `#include <mstcpip.h>` in
+`src/network.cpp`, and without it the build fails at the `SIO_RCVALL`
+`WSAIoctl` call on line 246. The fix is kept as a real patch file and applied by
+the script, so you never edit source by hand — and it will not fight you on a
+later `git pull`, because it is applied as a patch rather than an edit.
+
+> [!WARNING]
+> The upstream repository has **no LICENSE file**. Absence of a license means
+> all rights reserved, which is why the source is a **git submodule** pinned at
+> `e1d6952` — referenced, not redistributed — rather than copied into this
+> repository. Read it before you use it.
 
 Reports `is_admin: false` by default and exposes `elevate` / `run_elevated`
 separately. Prefer the non-elevated path; do not trigger UAC unprompted.

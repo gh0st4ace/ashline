@@ -1,0 +1,3 @@
+[submodule "vendor/cheat-mcp"]
+	path = vendor/cheat-mcp
+	url = https://github.com/AnonymoDGH/cheat-mcp.git

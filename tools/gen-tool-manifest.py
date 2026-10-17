@@ -74,9 +74,12 @@ CATALOG: dict[str, dict] = {
         needed_by="dotnet-reverse, game-engine",
         vendoring="NOT VENDORABLE - 203 MiB"),
     "nuget": dict(
-        role="dnlib + AsmResolver assemblies built for netstandard2.0/net6/net8/net9.",
-        source="built locally via dotnet build",
-        license="MIT / MIT",
+        role="dnlib + AsmResolver assemblies built locally for "
+             "netstandard2.0/net6/net8/net9.",
+        source="https://github.com/0xd4d/dnlib  and  "
+               "https://github.com/Washi1337/AsmResolver  (both fetched by NuGet "
+               "and compiled locally - no version pin recorded on disk)",
+        license="dnlib MIT; AsmResolver MIT",
         installer="scripts/install-game-tools.ps1",
         needed_by="dotnet-reverse, game-modding-lab",
         vendoring="regenerable - dotnet build, 1.2 MiB"),
@@ -113,12 +116,18 @@ CATALOG: dict[str, dict] = {
     "cheat-mcp": dict(
         role="72-tool MCP: process/module enum, memory read/write/scan, pointer chains, "
              "DLL injection, IAT hooking, anti-cheat detection, network capture.",
-        source="built from source; upstream omits #include <mstcpip.h> in src/network.cpp "
-               "which breaks SIO_RCVALL - that include is a LOCAL patch",
-        license="check upstream",
-        installer="manual build",
-        needed_by="rea? no - game-memory-lab, game-hacking, graphics-api",
-        vendoring="NOT VENDORABLE - third-party source plus local patch"),
+        source="https://github.com/AnonymoDGH/cheat-mcp.git",
+        version="v1.1",
+        commit="e1d6952",
+        license="NO LICENSE FILE present in the repository as cloned - verify before use",
+        installer="scripts/install-mcp-servers.ps1 -What all  (clones and builds)",
+        needed_by="game-memory-lab, game-hacking, graphics-api, anti-cheat-architecture",
+        vendoring="NOT VENDORABLE - third-party source plus a local patch",
+        build="CMake 3.16+, C++17, MSVC. Produces build/cheatmcp.exe",
+        local_patch="src/network.cpp line 15 adds #include <mstcpip.h>. Upstream omits it, "
+                    "which breaks the SIO_RCVALL call at line 246; the file carries a "
+                    "comment saying so. LOCAL FIX - conflicts on a fresh git pull.",
+    ),
     "Il2CppDumper": dict(
         role="Unity IL2CPP metadata and symbol dumping.",
         source="https://github.com/Perfare/Il2CppDumper/releases",
@@ -141,10 +150,11 @@ CATALOG: dict[str, dict] = {
         needed_by="rev-struct",
         vendoring="install via script - 9.4 MiB"),
     "kdmapper": dict(
-        role="Kernel driver mapper. Analysis reference only - never run on the host.",
+        role="Kernel driver mapper. Analysis reference only - never run on the host. "
+             "40 files, 2 binaries.",
         source="https://github.com/kdmapper/kdmapper",
-        license="check upstream",
-        installer="manual",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
         needed_by="windows-kernel-security",
         vendoring="NOT VENDORABLE - offensive kernel tooling"),
     # --- lua / roblox ---
@@ -163,12 +173,13 @@ CATALOG: dict[str, dict] = {
         needed_by="luau-roblox-reverse",
         vendoring="install via script - 7.1 MiB"),
     "luau-decompiler": dict(
-        role="Extended Luau decompilation set.",
-        source="manual",
-        license="unknown - verify before redistribution",
-        installer="manual",
+        role="Extended Luau decompilation set. 231 MiB.",
+        source="https://github.com/PumbaaDev/luau-decompiler.git",
+        commit="ee07098",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
         needed_by="luau-roblox-reverse",
-        vendoring="NOT VENDORABLE - license unverified"),
+        vendoring="NOT VENDORABLE - 231 MiB, license unverified"),
     # --- web / recon ---
     "nuclei": dict(
         role="Template-driven scanner.", source="https://github.com/projectdiscovery/nuclei",
@@ -197,35 +208,59 @@ CATALOG: dict[str, dict] = {
         vendoring="NOT VENDORABLE - 371 MiB"),
     # --- anti-debug ---
     "TitanHide": dict(
-        role="Windows kernel driver that hides a debugger. x64dbg plugins included.",
-        source="https://github.com/68110357/Anti-Debug",
-        license="check upstream",
-        installer="manual",
+        role="Windows kernel driver that hides a debugger from user-mode tools. "
+             "x64dbg plugins included. 31 files, 7 binaries.",
+        source="PROVENANCE NOT RECORDED - the folder on this machine has no .git "
+               "and no README. Obtain the source yourself; do not trust an "
+               "unattributed driver of this kind.",
+        license="NO LICENSE FILE seen on disk - verify before use",
+        installer="manual - not installed by any script here",
         needed_by="anti-debugging-techniques",
-        vendoring="NOT VENDORABLE - offensive tooling"),
+        vendoring="NOT VENDORABLE - offensive kernel tooling, unattributed"),
     # --- MCP and python envs ---
     "ida-pro-mcp-venv": dict(
-        role="Python venv for the ida-pro-mcp 1.4.0 bridge REA's attached provider uses.",
-        source="https://github.com/mrexodia/ida-pro-mcp", license="check upstream",
-        installer="manual",
+        role="Python venv holding the ida-pro-mcp bridge that REA's attached "
+             "provider uses. Installed distribution measured as 1.4.0.",
+        source="https://github.com/mrexodia/ida-pro-mcp  (1.4.0, from "
+               "site-packages/ida_pro_mcp-1.4.0.dist-info)",
+        version="1.4.0",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
         needed_by="rea (attached provider), start-ida-mcp.ps1",
         vendoring="regenerable - pip install into a venv"),
     "renderdoc-mcp": dict(
-        role="RenderDoc MCP server binary.",
-        source="prebuilt Windows release", license="check upstream",
-        installer="manual", needed_by="renderdoc-mcp skill",
-        vendoring="install via script - 18 MiB"),
+        role="RenderDoc MCP server.",
+        source="https://github.com/JiaboLi-GitHub/renderdoc-mcp.git",
+        commit="176d12b",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
+        needed_by="renderdoc-mcp skill",
+        vendoring="install via git clone - 18 MiB"),
     "renderdoc-mcp-bin": dict(
-        role="RenderDoc MCP prebuilt distribution.",
-        source="prebuilt Windows release", license="check upstream",
-        installer="manual", needed_by="renderdoc-mcp skill",
-        vendoring="install via script - 80 MiB"),
+        role="RenderDoc MCP prebuilt Windows distribution. 16 files, 6 binaries. "
+             "Sibling of renderdoc-mcp, which is the same server from source.",
+        source="https://github.com/JiaboLi-GitHub/renderdoc-mcp.git  (prebuilt "
+               "Windows release; PROVENANCE NOT RECORDED on disk - the folder has no .git)",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
+        needed_by="renderdoc-mcp skill",
+        vendoring="NOT VENDORABLE - 80 MiB, license unverified"),
     "reverify": dict(
-        role="Re-verification helper.", source="manual", license="unknown",
-        installer="manual", needed_by="workflow scripts", vendoring="small, review before shipping"),
+        role="Re-verification helper.",
+        source="https://github.com/2akouwu/reverify.git",
+        commit="f32ea84",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
+        needed_by="workflow scripts",
+        vendoring="small - review license before shipping"),
     "lib": dict(
-        role="Shared libraries.", source="various", license="various",
-        installer="various", needed_by="various", vendoring="review before shipping"),
+        role="Shared libraries used by other tools in this directory. 405 files, "
+             "2 binaries. PROVENANCE NOT RECORDED - no .git, no manifest.",
+        source="PROVENANCE NOT RECORDED - content unknown",
+        license="unknown - not shipped, not redistributed",
+        installer="not tracked - a side effect of other installs",
+        needed_by="local tools in this directory",
+        vendoring="NOT VENDORABLE - provenance unknown"),
     "de4dot": dict(
         role=".NET deobfuscator and IL post-processor.",
         source="https://github.com/de4dot/de4dot/releases",
@@ -236,17 +271,20 @@ CATALOG: dict[str, dict] = {
     "ghidra-mcp": dict(
         role="MCP server wrapping Ghidra. REJECTED as a duplicate: REA already "
              "supplies 170 tools including a Ghidra provider, and the extension "
-             "name collides with the local fork.",
-        source="https://github.com/LaurieWired/GhidraMCP",
-        license="check upstream",
+             "name collides with the local fork. 6.0.0 present on disk.",
+        source="https://github.com/LaurieWired/GhidraMCP  (6.0.0, from "
+               "GhidraMCP-6.0.0.zip and ghidra_mcp_bridge-6.0.0-py3-none-any.whl)",
+        version="6.0.0",
+        license="check upstream before use - no LICENSE file seen on disk",
         installer="REJECTED - do not install",
         needed_by="nothing - see docs/knowledge-workspaces.md",
         vendoring="not shipped - rejected duplicate"),
     "pdbfetch": dict(
         role="Symbol and PDB field lookup against public symbol servers.",
-        source="https://github.com/winsiderss/pdbfetch",
-        license="check upstream",
-        installer="manual",
+        source="https://github.com/ajkhoury/pdbfetch.git",
+        commit="1051b1e",
+        license="check upstream before use - no LICENSE file seen on disk",
+        installer="manual - not installed by any script here",
         needed_by="rev-symbol, crash triage",
         vendoring="small - review license before shipping"),
 }

@@ -315,6 +315,24 @@ def gate_gates_are_wired() -> None:
         ok(f"all {len(defined)} gates are called from main()")
 
 
+def gate_sources() -> None:
+    section("resolvable tool sources")
+    # Reported by users: "cheat-mcp is absent from the official documentation and
+    # repository manifest". The entry existed but carried no URL, so nobody could
+    # install it. Writing check-sources.py then found fourteen more entries with
+    # the same defect - it was systemic, not one bad row.
+    r = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "check-sources.py")],
+        capture_output=True, text=True)
+    for line in (r.stdout or "").splitlines():
+        if line.strip():
+            print(f"  {line.strip()}")
+    if r.returncode != 0:
+        bad("at least one tool has no resolvable source - see the lines above")
+    else:
+        ok("every catalogued tool carries a resolvable source and a stated licence")
+
+
 def gate_required_files() -> None:
     section("required files")
     required = [
@@ -358,6 +376,7 @@ def main() -> int:
     gate_required_files()
     gate_control_chars()
     gate_anchors()
+    gate_sources()
     gate_secrets()
     gate_json()
     gate_powershell()

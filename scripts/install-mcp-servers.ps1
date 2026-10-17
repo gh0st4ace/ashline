@@ -26,6 +26,11 @@
 .PARAMETER ConfigDir
     Where the OpenCode config lives, for the post-install check.
 
+.PARAMETER ToolsDir
+    Where cheat-mcp is cloned and built. Default: from WB_TOOLS_DIR, else
+    D:\Tools. Exposed so the build path can be exercised against an empty
+    directory instead of a machine that already has the binary.
+
 .NOTES
     ASCII only: PowerShell 5.1 reads a BOM-less file as ANSI.
 #>
@@ -34,7 +39,8 @@ param(
     [switch]$DryRun,
     [ValidateSet('npm', 'all', 'status')]
     [string]$What = 'npm',
-    [string]$ConfigDir
+    [string]$ConfigDir,
+    [string]$ToolsDir
 )
 
 # -- Path resolution ---------------------------------------------------------
@@ -115,21 +121,25 @@ $renderdocExe = Join-Path $ToolsDir 'renderdoc-mcp-bin\renderdoc-mcp-windows-x64
 if (Test-Path $renderdocExe) { Ok "renderdoc-mcp present" }
 else { Warn "renderdoc-mcp MISSING - prebuilt Windows release, see docs/tools.md" }
 
-if ($What -eq 'status' -or $DryRun) {
+if ($What -eq 'status') {
     Step 'Plan'
-    if ($What -eq 'status') { Say 'status only - nothing installed' }
-    else {
-        foreach ($p in $PKGS) {
-            $dir = Join-Path $globalRoot ($p.name -replace '/', '\')
-            if (-not (Test-Path $dir)) {
-                Say "would install $($p.name)@$($p.version)"
-            }
-        }
-        Say "would run the cheat-mcp build recipe"
-    }
+    Say 'status only - nothing installed'
     Write-Host ""
-    Write-Host "  DRY RUN / STATUS ONLY - nothing written." -ForegroundColor Green
+    Write-Host "  STATUS ONLY - nothing written." -ForegroundColor Green
     exit 0
+}
+# -DryRun deliberately does NOT exit here. The cheat-mcp section below has its
+# own dry-run branch that prints the exact clone, patch and cmake commands, and
+# an earlier revision returned early with "would run the build recipe" - which
+# is the one thing a reader cannot act on. A plan that does not say what it
+# would do is not a plan.
+
+if ($DryRun) {
+    Step 'Plan'
+    foreach ($p in $PKGS) {
+        $dir = Join-Path $globalRoot ($p.name -replace '/', '\')
+        if (-not (Test-Path $dir)) { Say "would install $($p.name)@$($p.version)" }
+    }
 }
 
 # ============================================================================
@@ -159,24 +169,95 @@ foreach ($p in $PKGS) {
 # ============================================================================
 Step 'cheat-mcp - build from source'
 # ============================================================================
-# Not an npm package. It is a C++ project built locally, and the upstream
-# omits `#include <mstcpip.h>` in src/network.cpp which breaks the SIO_RCVALL
-# call. That include is a LOCAL patch.
+# Not an npm package. A C++ project:
+#   https://github.com/AnonymoDGH/cheat-mcp.git   pinned at e1d6952 (v1.1)
+#
+# It is present in THIS repository as a git submodule at vendor/cheat-mcp, so
+# it arrives with `git clone --recursive`. This step clones it if missing,
+# applies the one local patch, and builds it.
+#
+# THE PATCH: upstream omits `#include <mstcpip.h>` in src/network.cpp, which
+# breaks the SIO_RCVALL WSAIoctl call at line 246 - the build fails without it.
+# The fix is kept as a real .patch file at patches/cheat-mcp-mstcpip.patch and
+# applied here, rather than as prose telling the reader what to type. Earlier
+# revisions printed a literal "<cheat-mcp upstream>" placeholder, so the URL
+# appeared nowhere in the repository and nobody could install it.
+#
+# NOTE ON LICENSING: the upstream repository has NO LICENSE file. Absence of a
+# license means all rights reserved, which is why the source is a submodule -
+# referenced and pinned, not redistributed - rather than copied in.
+$CHEAT_URL    = 'https://github.com/AnonymoDGH/cheat-mcp.git'
+$CHEAT_COMMIT = 'e1d6952'
+
 $cheatRoot = Join-Path $ToolsDir 'cheat-mcp'
-if (Test-Path (Join-Path $cheatRoot 'build\cheatmcp.exe')) {
+$exePath   = Join-Path $cheatRoot 'build\cheatmcp.exe'
+
+if (Test-Path $exePath) {
     Say 'cheat-mcp already built'
-} elseif (Test-Path $cheatRoot) {
-    Warn 'cheat-mcp source present but not built.'
-    Say 'Recipe (needs Visual Studio + CMake + the WDK):'
-    Say '  1. git clone <cheat-mcp upstream> D:\Tools\cheat-mcp'
-    Say '  2. Add  #include <mstcpip.h>  at the top of src/network.cpp'
-    Say '     (upstream omits it, which breaks SIO_RCVALL. LOCAL FIX - it will'
-    Say '      conflict on a fresh git pull.)'
-    Say '  3. .\scripts\devshell.cmd x64 cmd /c "cmake --build build --config Release"'
-    Say '  4. Expect D:\Tools\cheat-mcp\build\cheatmcp.exe'
+    Say "  $exePath"
 } else {
-    Say 'cheat-mcp not present. It is a third-party C++ project and is not'
-    Say 'vendored here. See config/tool-manifest.json for the manifest entry.'
+    $patchFile = Join-Path $PSScriptRoot '..\patches\cheat-mcp-mstcpip.patch'
+
+    if (-not (Test-Path (Join-Path $cheatRoot '.git'))) {
+        Say "cloning $CHEAT_URL"
+        if ($DryRun) {
+            Write-Host "    [dry-run] git clone $CHEAT_URL $cheatRoot" -ForegroundColor DarkGray
+        } else {
+            New-Item -ItemType Directory -Force -Path (Split-Path $cheatRoot -Parent) | Out-Null
+            & git clone --filter=blob:none $CHEAT_URL $cheatRoot 2>&1 |
+                Where-Object { $_ -match 'error|fatal' } | ForEach-Object { Write-Host "      $_" -ForegroundColor DarkYellow }
+        }
+    } else {
+        Say 'cheat-mcp source already cloned'
+    }
+
+    if (-not $DryRun -and (Test-Path (Join-Path $cheatRoot '.git'))) {
+        & git -C $cheatRoot checkout -q $CHEAT_COMMIT 2>&1 | Out-Null
+        Say "  pinned to $CHEAT_COMMIT (v1.1)"
+
+        # Apply the patch only if it is not already applied. `git apply
+        # --reverse --check` succeeds when it IS applied, so this is the test
+        # for "already done" rather than blindly patching a clean file.
+        if (Test-Path $patchFile) {
+            & git -C $cheatRoot apply --reverse --check $patchFile 2>&1 | Out-Null
+            if ($LASTEXITCODE -eq 0) {
+                Say '  mstcpip.h patch already applied'
+            } else {
+                Say '  applying patches/cheat-mcp-mstcpip.patch'
+                & git -C $cheatRoot apply $patchFile 2>&1 |
+                    Where-Object { $_ -match 'error' } | ForEach-Object { Write-Host "      $_" -ForegroundColor DarkYellow }
+            }
+        } else {
+            Warn "patch file missing at $patchFile - the build will fail at SIO_RCVALL"
+        }
+    }
+
+    Say ''
+    Say 'Building (needs Visual Studio + CMake 3.16+):'
+    if ($DryRun) {
+        Write-Host "    [dry-run] cmake -S $cheatRoot -B $cheatRoot\build" -ForegroundColor DarkGray
+        Write-Host "    [dry-run] cmake --build $cheatRoot\build --config Release" -ForegroundColor DarkGray
+    } else {
+        $cmake = Get-Command cmake -EA SilentlyContinue
+        if (-not $cmake) {
+            Warn 'cmake not on PATH. Configure it from Visual Studio, or:'
+            Say '  winget install Kitware.CMake'
+            Say "  then: cmake -S $cheatRoot -B $cheatRoot\build"
+            Say "        cmake --build $cheatRoot\build --config Release"
+        } else {
+            & cmake -S $cheatRoot -B "$cheatRoot\build" 2>&1 |
+                Where-Object { $_ -match 'error|Error' } | Select-Object -First 5 |
+                ForEach-Object { Write-Host "      $_" -ForegroundColor DarkYellow }
+            & cmake --build "$cheatRoot\build" --config Release 2>&1 |
+                Where-Object { $_ -match 'error|Error' } | Select-Object -First 8 |
+                ForEach-Object { Write-Host "      $_" -ForegroundColor DarkYellow }
+            if (Test-Path $exePath) {
+                Ok "built: $exePath"
+            } else {
+                Warn "build finished but $exePath is absent - check the output above"
+            }
+        }
+    }
 }
 
 # ============================================================================
