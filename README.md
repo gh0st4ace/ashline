@@ -17,7 +17,7 @@
 [Quick start](#quick-start) · [What is in the box](#what-is-in-the-box) · [Why it is built this way](#why-it-is-built-this-way) · [The instruments](#the-instruments) · [Documentation](#documentation) · [Contributing](#contributing)
 
 ```powershell
-git clone https://github.com/YOUR_USER/opencode-workbench
+git clone https://github.com/gh0st4ace/opencode-workbench
 cd opencode-workbench
 .\install.ps1 -DryRun
 ```

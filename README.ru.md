@@ -17,7 +17,7 @@
 [Быстрый старт](#быстрый-старт) · [Что внутри](#что-внутри) · [Почему так устроено](#почему-так-устроено) · [Инструменты](#инструменты) · [Документация](#документация) · [Участие](#участие)
 
 ```powershell
-git clone https://github.com/YOUR_USER/opencode-workbench
+git clone https://github.com/gh0st4ace/opencode-workbench
 cd opencode-workbench
 .\install.ps1 -DryRun
 ```

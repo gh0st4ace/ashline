@@ -8,7 +8,7 @@ checks everything else.
 ## Quick start
 
 ```powershell
-git clone https://github.com/YOUR_USER/opencode-workbench
+git clone https://github.com/gh0st4ace/opencode-workbench
 cd opencode-workbench
 
 .\install.ps1 -DryRun     # print the plan, change nothing

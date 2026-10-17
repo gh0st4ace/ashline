@@ -14,7 +14,7 @@ hero:
       link: /methodology
     - theme: alt
       text: View on GitHub
-      link: https://github.com/YOUR_USER/opencode-workbench
+      link: https://github.com/gh0st4ace/opencode-workbench
 
 features:
   - title: Evidence, not confidence
@@ -31,7 +31,7 @@ features:
 ## Start with one command
 
 ```powershell
-git clone https://github.com/YOUR_USER/opencode-workbench
+git clone https://github.com/gh0st4ace/opencode-workbench
 cd opencode-workbench
 .\install.ps1 -DryRun
 ```

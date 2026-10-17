@@ -108,4 +108,4 @@ Recorded here so the omissions are visible rather than looking like oversights:
   `-c safe.directory=`, unlike every other updater. Harmless while it is always
   invoked with `-SkipPull`; would fail standalone under the scheduler account.
 
-[0.1.0]: https://github.com/YOUR_USER/opencode-workbench/releases/tag/v0.1.0
+[0.1.0]: https://github.com/gh0st4ace/opencode-workbench/releases/tag/v0.1.0
