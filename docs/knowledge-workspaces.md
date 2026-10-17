@@ -125,7 +125,7 @@ would be wrong.
 
 ## The LOLDrivers feed
 
-`knowledge/lol_drivers.json` — a **flat JSON array**, 702 entries, no envelope
+`knowledge/kernel-sec/knowledge/lol_drivers.json` — a **flat JSON array**, 702 entries, no envelope
 metadata.
 
 | Field | Meaning |
@@ -148,7 +148,7 @@ load even with HVCI enabled.
 ### Ashline lives outside the data
 
 There is **no** `Fetched` or provenance field in the file — probed ten candidate
-keys, all 0/702. Provenance lives only in `knowledge/README.md`:
+keys, all 0/702. Provenance lives only in `knowledge/kernel-sec/knowledge/README.md`:
 
 - Source: `https://www.loldrivers.io/api/drivers.json`
 - Fetched: 15.10.2026, 33.3 MB, 702 entries verified by parse

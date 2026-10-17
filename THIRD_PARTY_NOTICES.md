@@ -54,7 +54,7 @@ Six are configured by this project:
 | [@upstash/context7-mcp](https://www.npmjs.com/package/@upstash/context7-mcp) | npm | 2 |
 | renderdoc-mcp | Prebuilt Windows binary | — |
 
-`config/mcp-configs/mcp-servers.json` additionally **catalogues** 34 candidate
+`config/mcp-servers.json.template` additionally **catalogues** 34 candidate
 servers. It is a reference menu, not a configuration — nothing in it is running,
 all credentials are placeholders, and those servers are not installed by this
 repo. Their licenses apply to them.

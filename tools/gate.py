@@ -231,6 +231,90 @@ def gate_powershell_runtime() -> None:
         ok(f"all {len(scripts) - 2} preview-capable .ps1 run clean under -DryRun")
 
 
+def gate_control_chars() -> None:
+    section("stray control characters")
+    # Several edits here were applied through PowerShell double-quoted
+    # here-strings, where a backtick is an ESCAPE. A markdown code span written
+    # as `awesome inside one produced BEL (U+0007) plus "wesome" - which
+    # silently deleted a letter and left a control byte in a shipped README.
+    # Invisible in most viewers, but it is corruption, and nothing else here
+    # would have caught it.
+    offenders = 0
+    for f in sorted(ROOT.rglob("*")):
+        if not f.is_file() or ".git" in f.parts:
+            continue
+        if f.suffix.lower() not in {".md", ".json", ".jsonc", ".ps1", ".py",
+                                    ".cmd", ".template", ".txt", ".html", ".c", ".bat"}:
+            continue
+        raw = f.read_bytes()
+        try:
+            t = raw[3:].decode("utf-8") if raw.startswith(b"\xef\xbb\xbf") else raw.decode("utf-8")
+        except (UnicodeDecodeError, PermissionError):
+            continue
+        for i, ch in enumerate(t):
+            if ord(ch) < 32 and ch not in "\n\r\t":
+                line = t[:i].count("\n") + 1
+                bad(f"{f.relative_to(ROOT)}:{line}  control char U+{ord(ch):04X}")
+                offenders += 1
+        for m in re.finditer("[\u200b\u200c\u200d\u00ad]", t):
+            line = t[:m.start()].count("\n") + 1
+            bad(f"{f.relative_to(ROOT)}:{line}  zero-width U+{ord(m.group()):04X}")
+            offenders += 1
+    if not offenders:
+        ok("no control or zero-width characters in any tracked text file")
+
+
+def gate_anchors() -> None:
+    section("in-page anchors")
+    # GitHub builds heading ids by lowercasing, stripping punctuation, and
+    # REMOVING EMOJI entirely - so "## ⚡ Quick start" becomes #quick-start, not
+    # #-quick-start. Six navigation links were written the wrong way and every
+    # one of them silently 404ed to the top of the page.
+    #
+    # Reproduce that algorithm here rather than guessing, then require every
+    # in-page link to match a heading this file actually has.
+    for f in sorted(list(ROOT.glob("*.md")) + list((ROOT / "docs").rglob("*.md"))):
+        text = f.read_text(encoding="utf-8", errors="replace")
+        slugs = set()
+        for m in re.finditer(r"(?m)^#{1,6}\s+(.+)$", text):
+            s = m.group(1)
+            # GitHub drops emoji before slugging. Written as escape sequences,
+            # never as literals: a literal ZWJ or variation selector in this
+            # source is itself invisible, and this very gate flagged its own
+            # first draft for exactly that.
+            s = re.sub("[\U0001F000-\U0001FAFF"
+                       "\u2600-\u27BF"
+                       "\uFE0F\u200D\u20E3]", "", s)
+            s = re.sub(r"[^\w\s-]", "", s.lower())
+            slugs.add(re.sub(r"[\s_]+", "-", s).strip("-"))
+        for m in re.finditer(r"\]\(#([^)]+)\)", text):
+            target = m.group(1)
+            if target not in slugs:
+                line = text[: m.start()].count("\n") + 1
+                bad(f"{f.relative_to(ROOT)}:{line}  in-page link #{target} "
+                    f"matches no heading")
+    ok("all in-page anchors resolve")
+
+
+def gate_gates_are_wired() -> None:
+    section("every gate actually runs")
+    # A gate that is defined but never called is not a gate. That happened here:
+    # gate_anchors() was added, the first report said "11 passed" and looked
+    # green, and the new check had never executed. The count was the tell - it
+    # did not move.
+    #
+    # So: every def gate_* must appear as a bare call in main().
+    src = (ROOT / "tools" / "gate.py").read_text(encoding="utf-8")
+    defined = set(re.findall(r"(?m)^def (gate_\w+)\(", src))
+    called = set(re.findall(r"(?m)^    (gate_\w+)\(\)", src))
+    missing = sorted(defined - called)
+    if missing:
+        for m in missing:
+            bad(f"gate {m}() is defined but never called from main()")
+    else:
+        ok(f"all {len(defined)} gates are called from main()")
+
+
 def gate_required_files() -> None:
     section("required files")
     required = [
@@ -270,7 +354,10 @@ def gate_repo_size() -> None:
 
 def main() -> int:
     print("ashline release gate")
+    gate_gates_are_wired()
     gate_required_files()
+    gate_control_chars()
+    gate_anchors()
     gate_secrets()
     gate_json()
     gate_powershell()

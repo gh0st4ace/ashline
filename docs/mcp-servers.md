@@ -69,7 +69,7 @@ Useful surface: `memory_read`, `memory_write`, `scan_value`, `scan_aob`,
 
 ## The catalogued 34
 
-`config/mcp-configs/mcp-servers.json` is a **curated reference catalog**, not a
+`config/mcp-servers.json.template` is a **curated reference catalog**, not a
 live config. Five independent reasons:
 
 1. It self-declares: *"Copy the servers you need to your `~/.claude.json`
@@ -164,7 +164,7 @@ prompt-injection surface. See [agentic-security.md](agentic-security.md#memory).
 
 ## Adding a server
 
-1. Copy the entry from `config/mcp-configs/mcp-servers.json`.
+1. Copy the entry from `config/mcp-servers.json.template`.
 2. **Convert the schema.** `mcpServers` → `mcp.servers`; `command` + `args`
    → array `command`; `type: "http"` → `type: "local" | "remote"`.
 3. **Pin every version.** No `@latest`.

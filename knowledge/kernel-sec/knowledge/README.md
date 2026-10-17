@@ -22,8 +22,8 @@ carry `LoadsDespiteHVCI=FALSE` (i.e. loadable even with HVCI on).
 
 | Script | Function |
 | ------ | -------- |
-| `scripts/driver_triage.py` | .sys file: SHA256/SHA1/MD5, PE machine+sections, VS version fields, Authenticode status (`--sig`), LOLDrivers hash-match with `--json` / name-only weak signals |
-| `scripts/feed_query.py` | ask the feed: `stats`, `name <file>`, `company <substr>`, `cve <id>`, `id <author>`, `top` |
+| `knowledge/kernel-sec/scripts/driver_triage.py` | .sys file: SHA256/SHA1/MD5, PE machine+sections, VS version fields, Authenticode status (`--sig`), LOLDrivers hash-match with `--json` / name-only weak signals |
+| `knowledge/kernel-sec/scripts/feed_query.py` | ask the feed: `stats`, `name <file>`, `company <substr>`, `cve <id>`, `id <author>`, `top` |
 
 Verified live 15.10.2026: acpi.sys → 10.0.26100.9278, Microsoft, Authenticode Valid,
 no LOLD match; nonexistent path → handled error; explorer.exe (control, non-driver) → parses fine.

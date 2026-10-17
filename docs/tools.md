@@ -213,7 +213,7 @@ $env:WB_GAME_CLIENT     = 'H:\SteamLibrary\steamapps\common\DayZ\DayZ_x64.exe'
 The `.cmd` launchers additionally read `%WB_*%`, because Task Scheduler runs
 under SYSTEM where `%USERPROFILE%` is the system profile — which is exactly why
 they use absolute paths rather than `%USERPROFILE%`. `install.ps1` writes
-`scripts/paths.cmd` with the resolved values.
+`scripts/paths.cmd` (written by the installer, not shipped) with the resolved values.
 
 ---
 

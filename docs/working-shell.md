@@ -16,7 +16,7 @@ read from disk or generated from a manifest, not typed by hand.
 | **MCP servers** | 6 active · 34 catalogued | `opencode.jsonc` | no |
 | **Live MCP tools** | 277 | — | — |
 | **Agents** | 4 authored | `agents/` | **yes** |
-| **Scripts** | 21 | `scripts/` | **yes** |
+| **Scripts** | 23 | `scripts/` | **yes** |
 | **Knowledge workspaces** | 2 | `knowledge/` | **yes** |
 
 **Total measured footprint: ~24 GiB across two roots, reproduced from a 1 MB

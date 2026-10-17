@@ -29,6 +29,9 @@ cd ashline
 > и подтягиваются установщиком. Ничего оттуда не вендорится в репозиторий.
 
 <br />
+<br />
+
+</div>
 
 ## Быстрый старт
 
@@ -79,13 +82,13 @@ py -3 .\scripts\doctor.py      # здоровье рантайма, коды 0 /
 | --- | ---: | --- | --- |
 | **Skills** | 174 в 5 корнях | Маршрутизация по протоколу, а не по ключевому слову | [docs/skills-catalog.md](docs/skills-catalog.md) |
 | **Коллекции-ссылки** | 7 · 21,2 ГиБ | Ищутся, но не грузятся целиком | [docs/collections.md](docs/collections.md) |
-| └ game-security-archive | **18,19 ГиБ** | 4086 первоисточников всех индексированных проектов. Тя��ется **тарболом, не git** - lazy-blob зависает на таком объёме. Атомарная подмена каталога, кэш на 7 дней | [docs/collections.md](docs/collections.md#the-manifest) |
-| └ wesome-game-security | 3,05 ГиБ | ~40 871 сводка проектов, 4105 wiki-страниц, 13 доменных скилов. Blobless sparse partial clone | то же |
+| └ game-security-archive | **18,19 ГиБ** | 4086 первоисточников всех индексированных проектов. Тянется **тарболом, не git** - lazy-blob зависает на таком объёме. Атомарная подмена каталога, кэш на 7 дней | [docs/collections.md](docs/collections.md#the-manifest) |
+| └ awesome-game-security | 3,05 ГиБ | ~40 871 сводка проектов, 4105 wiki-страниц, 13 доменных скилов. Blobless sparse partial clone | то же |
 | └ ещё 5 | 0,12 ГиБ | hack-skills, cyber-skills, game-hacking-refs, hacking-online-games, rea | то же |
 | **Живых MCP-инструментов** | 277 | 6 серверов; один REA даёт 170 | [docs/mcp-servers.md](docs/mcp-servers.md) |
 | **Агенты** | 4 авторских | Доменные специалисты, не универсалы | [docs/agents.md](docs/agents.md) |
 | **Слэш-команды** | 6 | Операционные, не декоративные | [docs/scripts.md](docs/scripts.md) |
-| **Скрипты обслуживания** | 20 | Установщики, проверки, обновлялки, дисциплина VM | [docs/scripts.md](docs/scripts.md) |
+| **Скрипты обслуживания** | 23 | Установщики, проверки, обновлялки, дисциплина VM | [docs/scripts.md](docs/scripts.md) |
 | **Базы знаний** | 2 | `game-lab` (реестр 50 игр), `kernel-sec` (фид 702 драйверов) | [docs/knowledge-workspaces.md](docs/knowledge-workspaces.md) |
 | **Движки анализа** | 3 | Ghidra headless, IDA attached, WinDbg | [docs/installation.md#движки-анализа) |
 
@@ -97,7 +100,7 @@ OpenCode грузит скилы из трёх *настроенных* корн
 
 | Корень | Кол-во | Как грузится | Источник |
 | --- | ---: | --- | --- |
-| `gameskills/` | 12 | `skills:` в `opencode.jsonc` | [gmh5225/awesome-game-security](https://github.com/gmh5225/awesome-game-security) |
+| `gameskills/` | 12 | `skills:` в `opencode.jsonc` | [gmh5225/aawesome-game-security](https://github.com/gmh5225/aawesome-game-security) |
 | `hackskills/` | 93 | `skills:` в `opencode.jsonc` | [yaklang/hack-skills](https://github.com/yaklang/hack-skills) |
 | `reaskills/` | 3 | `skills:` в `opencode.jsonc` | контрибьюторы REA |
 | `~/.agents/skills` | 64 | авто-обнаружение | rev-*, ghidra, radare2, pwn-chain, pentest-tools |

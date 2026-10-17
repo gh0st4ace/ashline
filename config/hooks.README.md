@@ -1,5 +1,12 @@
 # Hooks
 
+> [!NOTE]
+> **Upstream copy, kept for reference.** This file was shipped verbatim from
+> [affaan-m/ECC](https://github.com/affaan-m/ECC) (MIT). Its relative links point
+> into the ECC repository, not this one, so they will not resolve here. That is
+> expected - see [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md). The live
+> hook implementations live in the ECC clone, not in this repository.
+
 Hooks are event-driven automations that fire before or after Claude Code tool executions. They enforce code quality, catch mistakes early, and automate repetitive checks.
 
 ## How Hooks Work
