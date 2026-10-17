@@ -15,7 +15,7 @@ from pathlib import Path
 
 CFG = Path(r"C:\Users\rezer\.config\opencode")
 ECC = Path(r"D:\opencode\ecc")
-OUT = Path(r"D:\opencode\opencode-workbench\config\ecc-surface.json")
+OUT = Path(r"D:\opencode\provenance\config\ecc-surface.json")
 
 
 def count(path: Path, pattern: str = "*") -> int:
@@ -57,7 +57,7 @@ data = {
             "installed_as": "copied by the ECC installer",
             "note": (
                 "ECC ships a large command set. The 6 operational slash commands "
-                "this workbench depends on (/verify /doctor /stack /refresh /re "
+                "this configuration depends on (/verify /doctor /stack /refresh /re "
                 "/state) are defined in config/opencode.jsonc.template instead, so "
                 "they survive an ECC update."
             ),
@@ -112,7 +112,7 @@ data = {
         "The 315 skills and 103 commands themselves - affaan-m/ECC content, MIT, "
         "reproduced by running the installer rather than copied.",
         "LLM-jailbreak prompt agents in agents/ (DeepSeek, GEMINI, GLM and Muse "
-        "variants). Not workbench methodology.",
+        "variants). Not methodology.",
         "Operator-local scope-override directives.",
         "A live-format credential that was present in service.json.",
         "Two DayZ project handoff documents - that project has its own repository.",

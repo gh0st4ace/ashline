@@ -1,6 +1,6 @@
 # Will this actually work for someone else?
 
-Asked directly, so the answer is direct: **yes for the workbench, no for the
+Asked directly, so the answer is direct: **yes for the configuration, no for the
 toolchain, and no for anything licensed — until you run three commands.**
 
 This page is the honest install contract. It is deliberately the least
@@ -12,8 +12,8 @@ cloning it, seeing a broken harness, and concluding the whole thing is vapor.
 ## What works from a fresh clone
 
 ```powershell
-git clone https://github.com/gh0st4ace/opencode-workbench
-cd opencode-workbench
+git clone https://github.com/gh0st4ace/provenance
+cd provenance
 .\install.ps1 -Profile full
 ```
 
@@ -130,7 +130,7 @@ doubles: measured 368 tools instead of 184, with duplicates. Start from a normal
 project directory.
 
 Second most likely: **`-Profile config` instead of `-Profile full`**, which
-installs the workbench but leaves the skill catalog empty. It looks broken
+installs the configuration but leaves the skill catalog empty. It looks broken
 rather than partial, which is why the installer prints the skipped steps
 explicitly instead of failing quietly.
 

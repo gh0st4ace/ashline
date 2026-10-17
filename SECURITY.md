@@ -33,7 +33,7 @@ within 14 days. Fixes ship as a patch release; see [CHANGELOG.md](CHANGELOG.md).
 - MCP servers, including the 6 configured here. Report to their projects.
 - Analysis engines (Ghidra, IDA, WinDbg) and RE toolchains.
 
-**Always out of scope**, by design: the legitimate research this workbench
+**Always out of scope**, by design: the legitimate research this project
 enables against systems the operator does not own. See
 [DISCLAIMER.md](DISCLAIMER.md).
 
@@ -87,7 +87,7 @@ The templates in `config/` use `${VAR}` placeholders for this reason.
 
 ## Reporting scope for dual-use content
 
-This workbench documents security research tooling, including offensive
+This project documents security research tooling, including offensive
 capability. Reports about the *documentation* of such capability are handled as
 normal security reports. Reports demanding removal of dual-use tooling are not
 security issues and will be declined — see [DISCLAIMER.md](DISCLAIMER.md) for

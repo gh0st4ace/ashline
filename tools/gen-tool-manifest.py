@@ -12,7 +12,7 @@ distributed binary is repackaging, not sharing.
 
 But a reader needs to know EXACTLY what is expected, at which version, from
 which source, installed by which script, and required by which skill. Without
-that manifest a fresh machine is a guess, and a half-installed workbench is
+that manifest a fresh machine is a guess, and a half-installed environment is
 indistinguishable from a broken one.
 
 So: scan the disk, emit the contract. Nothing invented - every version and size
@@ -31,7 +31,7 @@ from pathlib import Path
 
 TOOLS = Path(r"D:\Tools")
 COLL = Path(r"D:\opencode")
-OUT = Path(r"D:\opencode\opencode-workbench\config\tool-manifest.json")
+OUT = Path(r"D:\opencode\provenance\config\tool-manifest.json")
 
 # name -> (install dir, what provides it, source, license, required by)
 # "source" is the canonical download the installer uses, not an invite to

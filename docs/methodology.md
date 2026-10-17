@@ -1,6 +1,6 @@
 # Methodology
 
-The reason this workbench exists as a document rather than a pile of tools.
+The reason this project exists as a document rather than a pile of tools.
 
 Four failure modes drove everything below. Each is described with what it cost,
 because a rule without its failure gets relaxed the first time it is inconvenient.

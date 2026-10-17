@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: OpenCode Workbench
+  name: Provenance
   text: One hardened OpenCode setup.
   tagline: Security research, reverse engineering, and game internals — with the evidence discipline and the health checks written down.
   actions:
@@ -14,7 +14,7 @@ hero:
       link: /methodology
     - theme: alt
       text: View on GitHub
-      link: https://github.com/gh0st4ace/opencode-workbench
+      link: https://github.com/gh0st4ace/provenance
 
 features:
   - title: Evidence, not confidence
@@ -31,8 +31,8 @@ features:
 ## Start with one command
 
 ```powershell
-git clone https://github.com/gh0st4ace/opencode-workbench
-cd opencode-workbench
+git clone https://github.com/gh0st4ace/provenance
+cd provenance
 .\install.ps1 -DryRun
 ```
 

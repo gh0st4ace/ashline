@@ -7,7 +7,7 @@ tool repositories, and both enforce the same admission rule.
 
 ## `game-lab`
 
-Game RE / memory research / modding workbench. Backs `game-engine-detection`,
+Game RE / memory research / modding environment. Backs `game-engine-detection`,
 `game-memory-lab`, `game-modding-lab`, `anti-cheat-architecture`, and
 `game-research-tool-discovery`.
 

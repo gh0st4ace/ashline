@@ -2,7 +2,7 @@
 
 **English** · [Русский](README.ru.md)
 
-# OpenCode Workbench
+# Provenance
 
 ### One hardened OpenCode setup for security research, reverse engineering, and game internals.
 
@@ -17,8 +17,8 @@
 [Quick start](#quick-start) · [What is in the box](#what-is-in-the-box) · [Why it is built this way](#why-it-is-built-this-way) · [The instruments](#the-instruments) · [Documentation](#documentation) · [Contributing](#contributing)
 
 ```powershell
-git clone https://github.com/gh0st4ace/opencode-workbench
-cd opencode-workbench
+git clone https://github.com/gh0st4ace/provenance
+cd provenance
 .\install.ps1 -DryRun
 ```
 
@@ -202,7 +202,7 @@ you derived yesterday.
 | [Methodology](docs/methodology.md) | Adopting the evidence discipline. The core of this repo. |
 | [Skills catalog](docs/skills-catalog.md) | Choosing a skill. Routing table and the 174 skills. |
 | [Agents](docs/agents.md) | Writing or using a domain agent. |
-| [Scripts](docs/scripts.md) | Operating the workbench. All 20, with flags. |
+| [Scripts](docs/scripts.md) | Operating the environment. All 23, with flags. |
 | [MCP servers](docs/mcp-servers.md) | Wiring servers. Active 6, catalogued 34. |
 | [Collections](docs/collections.md) | Understanding dependencies. 7 collections, pinned. |
 | [Knowledge workspaces](docs/knowledge-workspaces.md) | Extending `game-lab` or `kernel-sec`. |

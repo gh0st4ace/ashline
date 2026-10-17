@@ -4,7 +4,7 @@ This repository **contains no third-party source code.** It declares upstream
 collections as runtime dependencies, cloned at install time and governed by
 their own licenses.
 
-The workbench's own code is MIT — see [LICENSE](LICENSE).
+This project's own code is MIT — see [LICENSE](LICENSE).
 
 ---
 
@@ -43,7 +43,7 @@ is the authoritative record.
 
 ## MCP servers
 
-Six are configured by the workbench:
+Six are configured by this project:
 
 | Server | Source | Tools |
 | --- | --- | ---: |

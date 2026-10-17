@@ -1,5 +1,5 @@
 // ============================================================================
-// OpenCode Workbench - configuration template
+// Provenance - configuration template
 //
 // Placeholders are substituted by install.ps1:
 //   ${CONFIG_DIR}        the OpenCode config root, default ~/.config/opencode

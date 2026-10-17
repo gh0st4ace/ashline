@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Installs the OpenCode Workbench configuration.
+    Installs the Provenance configuration.
 
 .DESCRIPTION
     Copies config templates, agents, commands, and scripts into the OpenCode
@@ -188,7 +188,7 @@ if ($existing -and -not $Force) {
 # Stage
 # ============================================================================
 Step 'Stage'
-$stage = Join-Path $env:TEMP ("opencode-workbench-" + $stamp)
+$stage = Join-Path $env:TEMP ("provenance-" + $stamp)
 Write-Plan "stage to $stage" {
     if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
     New-Item -ItemType Directory -Force -Path $stage | Out-Null
@@ -334,7 +334,7 @@ if ($Profile -in @('tools', 'full')) {
 # ============================================================================
 # The bulk of the running catalog - 315 skills, 103 commands, 9 custom tools,
 # plugins, hooks - comes from affaan-m/ECC (MIT) and is NOT vendored. Without
-# this step the workbench installs but the skill catalog stays empty, which is
+# this step the config installs but the skill catalog stays empty, which is
 # the single most likely way for a fresh install to look "broken".
 if ($Profile -in @('tools', 'full')) {
     Step 'ECC surface (affaan-m/ECC, MIT)'

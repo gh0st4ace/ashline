@@ -1,6 +1,6 @@
 # Agentic security
 
-A review of this workbench's own agent setup, using the same evidence discipline
+A review of this project's own agent setup, using the same evidence discipline
 it applies to everything else.
 
 Adapted from `docs/agentic-security.md` in the local security guide
@@ -212,6 +212,6 @@ You cannot debug what you cannot see.
 ## Apply this to your own setup
 
 `security-audit` and the `agent-security-hardening` skill cover the general case.
-This page covers what is specific to *this* workbench: the six active MCP
+This page covers what is specific to *this* project: the six active MCP
 servers, the read-only collection matrix, the VM discipline, and the disabled
 memory auto-capture.

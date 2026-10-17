@@ -1,7 +1,7 @@
 #requires -Version 5.1
 <#
 .SYNOPSIS
-    Game / cheat / reverse workbench, driven by what the operator actually does.
+    Game / cheat / reverse environment, driven by what the operator actually does.
 
 .DESCRIPTION
     Targets stated work: cheat authoring, cheat reverse engineering, game and

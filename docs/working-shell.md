@@ -135,7 +135,7 @@ staging debris.
 | Hook definitions | 4 + 2 subdirs | no |
 
 `install.ps1` fetches this on `-Profile tools`/`full`, because without it a
-fresh install **looks broken**: workbench layer present, skill catalog empty.
+fresh install **looks broken**: config layer present, skill catalog empty.
 That is the most likely first-run failure.
 
 ---
@@ -185,8 +185,8 @@ Full detail: [knowledge-workspaces.md](knowledge-workspaces.md).
 ## Reproduce the shell
 
 ```powershell
-git clone https://github.com/gh0st4ace/opencode-workbench
-cd opencode-workbench
+git clone https://github.com/gh0st4ace/provenance
+cd provenance
 
 .\install.ps1 -DryRun              # the plan, writes nothing
 .\install.ps1 -Profile full        # config + ECC + collections + skill links

@@ -63,7 +63,7 @@ $PKGS = @(
 )
 
 Write-Host ""
-Write-Host "opencode-workbench - MCP server installation" -ForegroundColor Cyan
+Write-Host "provenance - MCP server installation" -ForegroundColor Cyan
 
 # ============================================================================
 Step 'Preflight'

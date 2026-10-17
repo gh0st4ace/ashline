@@ -1,5 +1,5 @@
 {
-  "name": "opencode-workbench",
+  "name": "provenance",
   "version": "0.1.0",
   "description": "One hardened OpenCode setup for security research, reverse engineering, and game internals - with the evidence discipline and health checks written down.",
   "keywords": [
@@ -12,14 +12,14 @@
     "windows"
   ],
   "license": "MIT",
-  "author": "opencode-workbench contributors",
-  "homepage": "https://github.com/gh0st4ace/opencode-workbench#readme",
+  "author": "provenance contributors",
+  "homepage": "https://github.com/gh0st4ace/provenance#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gh0st4ace/opencode-workbench.git"
+    "url": "https://github.com/gh0st4ace/provenance.git"
   },
   "bugs": {
-    "url": "https://github.com/gh0st4ace/opencode-workbench/issues"
+    "url": "https://github.com/gh0st4ace/provenance/issues"
   },
   "engines": {
     "node": ">=20"

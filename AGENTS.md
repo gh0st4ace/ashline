@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Operating instructions for agents and humans working in this repository, and
-the methodology this workbench is built on.
+the methodology this project is built on.
 
 Read this file first. It is the cheapest file in the repo and it prevents the
 expensive mistakes documented in [docs/methodology.md](docs/methodology.md).
@@ -178,7 +178,7 @@ next month.
 ## 10. Safety boundaries
 
 - Memory acquisition against a **live third-party anti-cheat** is out of scope for
-  this workbench. Own projects, offline sessions, and lab benches are in scope.
+  this project. Own projects, offline sessions, and lab benches are in scope.
   See [DISCLAIMER.md](DISCLAIMER.md).
 - Do not load kernel anti-cheat or vulnerable-driver components on the host.
 - Do not add capability claims to a collection page to make it look better than

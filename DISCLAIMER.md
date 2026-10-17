@@ -2,7 +2,7 @@
 
 ## Scope
 
-This workbench is for **legitimate security research, reverse engineering, and
+This project is for **legitimate security research, reverse engineering, and
 game-internals work on systems you own or are authorised to test.**
 
 **In scope**
@@ -67,7 +67,7 @@ reference catalog is a **fact about the field**, not a recommendation.
 Provided "AS IS", without warranty of any kind, as stated in the
 [MIT license](LICENSE).
 
-Specifically, this workbench makes **no accuracy claim** about any offset,
+Specifically, this project makes **no accuracy claim** about any offset,
 version, or vulnerability record it ships. Those are point-in-time records that
 go stale — sometimes silently, which is exactly what
 `doctor.py`'s client-identity check exists to catch.

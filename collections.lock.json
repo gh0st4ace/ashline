@@ -1,6 +1,6 @@
 {
   "$comment": [
-    "Authoritative record of every declared dependency of this workbench.",
+    "Authoritative record of every declared dependency of this project.",
     "Nothing here is vendored - each entry is cloned at install time and pinned",
     "to the commit below. See THIRD_PARTY_NOTICES.md for licenses and the",
     "docs/collections.md page for the human-readable table.",

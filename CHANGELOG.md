@@ -12,7 +12,7 @@ left out entirely.** Measured on disk:
 
     D:\opencode   22.36 GiB   21.24 GiB of it other people's repos
     D:\Tools       8.32 GiB   the tools (4.67 GiB of it VM media)
-    workbench      0.95 MiB   what shipped
+    provenance     0.95 MiB   what ships
 
 So the binaries are not vendored, and cannot be: GitHub's per-file limit is
 100 MB against Ghidra at 865 MiB, hashcat 371, Sysinternals 272, JDK 328, dnSpy
@@ -100,7 +100,7 @@ definitions — pinned to a commit, with the locally authored v2 adaptations nam
 separately and the deliberate exclusions listed.
 
 `install.ps1` now fetches this surface on `-Profile tools`/`full`. Without it a
-fresh install looks broken: the workbench layer is present and the skill catalog
+fresh install looks broken: the configuration layer is present and the skill catalog
 is empty. That is the single most likely first-run failure.
 
 Also captured on the completeness pass: `ecc-v2-shim/` (three authored files
@@ -165,7 +165,7 @@ Recorded here so the omissions are visible rather than looking like oversights:
   commit, and exceed GitHub's 100 MB per-file limit.
 - **ECC's 315 skills, 103 commands, 9 tools, hooks, plugins.** Installed via
   ECC's own installer; declared as a dependency with its commit pinned.
-- **LLM-jailbreak prompt agents.** Not workbench methodology.
+- **LLM-jailbreak prompt agents.** Not methodology.
 - **Operator-local scope-override directives.** An instruction to the assistant,
   not a reusable practice, and not something a public repository should carry.
 - **A live-format password** that existed in the source config's `service.json`.
@@ -191,4 +191,4 @@ Recorded here so the omissions are visible rather than looking like oversights:
   `-c safe.directory=`, unlike every other updater. Harmless while it is always
   invoked with `-SkipPull`; would fail standalone under the scheduler account.
 
-[0.1.0]: https://github.com/gh0st4ace/opencode-workbench/releases/tag/v0.1.0
+[0.1.0]: https://github.com/gh0st4ace/provenance/releases/tag/v0.1.0

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Release gate for opencode-workbench.
+Release gate for provenance.
 
 Runs every check that must pass before this repository is published or updated.
 Read-only apart from regenerating the sanitized scripts.
@@ -269,7 +269,7 @@ def gate_repo_size() -> None:
 
 
 def main() -> int:
-    print("opencode-workbench release gate")
+    print("provenance release gate")
     gate_required_files()
     gate_secrets()
     gate_json()

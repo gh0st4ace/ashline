@@ -2,7 +2,7 @@
 
 [English](README.md) · **Русский**
 
-# OpenCode Workbench
+# Provenance
 
 ### Одно настроенное окружение OpenCode для исследований безопасности, реверс-инжиниринга и внутренностей игр.
 
@@ -17,8 +17,8 @@
 [Быстрый старт](#быстрый-старт) · [Что внутри](#что-внутри) · [Почему так устроено](#почему-так-устроено) · [Инструменты](#инструменты) · [Документация](#документация) · [Участие](#участие)
 
 ```powershell
-git clone https://github.com/gh0st4ace/opencode-workbench
-cd opencode-workbench
+git clone https://github.com/gh0st4ace/provenance
+cd provenance
 .\install.ps1 -DryRun
 ```
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Copy authored artifacts into the workbench repo, parameterizing absolute paths.
+Copy authored artifacts into the provenance repo, parameterizing absolute paths.
 
 LESSON (recorded deliberately): a blind text substitution of an absolute path
 into `${env:VAR}` looks correct and silently breaks every SINGLE-QUOTED string
@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 SRC = Path(r"C:\Users\rezer\.config\opencode")
-DST = Path(r"D:\opencode\opencode-workbench")
+DST = Path(r"D:\opencode\provenance")
 
 SECRETS = ["60vETVdSLPUqfNccBsqi2kPV891HXw1kZzrT_PxFF1I"]
 
